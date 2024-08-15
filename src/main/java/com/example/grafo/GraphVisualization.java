@@ -42,8 +42,8 @@ public class GraphVisualization extends Pane {
 
         // Definindo margens e espaçamento para que os pontos não fiquem na borda do Pane
         double margin = 50;
-        double gridSize = Math.ceil(Math.sqrt(nodeCount)); // Tamanho da grade (quadrado)
-        double cellSize = (Math.min(paneWidth, paneHeight) - 2 * margin) / gridSize; // Tamanho de cada célula
+        double gridSize = Math.ceil(Math.sqrt(nodeCount));
+        double cellSize = (Math.min(paneWidth, paneHeight) - 2 * margin) / gridSize;
 
         double[][] positions = new double[nodeCount][2];
 
@@ -83,7 +83,7 @@ public class GraphVisualization extends Pane {
                     double dx = x2 - x1;
                     double dy = y2 - y1;
                     double length = Math.sqrt(dx * dx + dy * dy);
-                    double offset = 15; // Tamanho do raio do círculo
+                    double offset = 15;
                     double sx1 = x1 + offset * (dx / length);
                     double sy1 = y1 + offset * (dy / length);
                     double sx2 = x2 - offset * (dx / length);
