@@ -1,19 +1,15 @@
 package com.example.grafo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class HelloController {
-
-    @FXML
-    private Label textoBoasVindas;
 
     @FXML
     private TextField fileNameField;
@@ -26,48 +22,31 @@ public class HelloController {
 
     @FXML
     private StackPane graphPane2;
+    private String nomeArquivo = null;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-        String nomeArquivo = fileNameField.getText();
-        if (nomeArquivo == null || nomeArquivo.isEmpty()) {
-            textoBoasVindas.setText("Por favor, insira um nome de arquivo.");
-            return;
-        }
-
+        nomeArquivo = fileNameField.getText();
         Matriz.leitor(nomeArquivo);
 
         int[][] matrizAdjacencia = Matriz.getMatrizAdjacencia();
         String[] rotulos = Matriz.getRotulos();
 
-        // Ordenar os rótulos em ordem alfabética e reorganizar a matriz de acordo
-        String[] rotulosOrdenados = Arrays.copyOf(rotulos, rotulos.length);
-        Arrays.sort(rotulosOrdenados);
-
-        int[][] matrizOrdenada = new int[rotulosOrdenados.length][rotulosOrdenados.length];
-        for (int i = 0; i < rotulosOrdenados.length; i++) {
-            int indiceOriginal = Arrays.asList(rotulos).indexOf(rotulosOrdenados[i]);
-            for (int j = 0; j < rotulosOrdenados.length; j++) {
-                int indiceOrdenado = Arrays.asList(rotulos).indexOf(rotulosOrdenados[j]);
-                matrizOrdenada[i][j] = matrizAdjacencia[indiceOriginal][indiceOrdenado];
-            }
-        }
-
-        // Exibir o grafo no Pane esquerdo
+        // Exibir o grafo
         if (graphPane != null) {
             graphPane.getChildren().clear();
-            GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizOrdenada, rotulosOrdenados);
+            GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
             graphPane.getChildren().add(visualizacaoGrafo);
         }
 
-        // Exibir a matriz no Pane direito
+        // Exibir a matriz
         if (graphPane1 != null) {
             graphPane1.getChildren().clear();
-            MatrizVisualization visualizacaoMatriz = new MatrizVisualization(matrizOrdenada, rotulosOrdenados);
+            MatrizVisualization visualizacaoMatriz = new MatrizVisualization(matrizAdjacencia, rotulos);
             graphPane1.getChildren().add(visualizacaoMatriz);
         }
 
-        // Exibir a análise do grafo no Pane inferior
+        // Exibir a análise
         if (graphPane2 != null) {
             graphPane2.getChildren().clear();
 
@@ -88,15 +67,12 @@ public class HelloController {
 
     @FXML
     protected void onClearButtonClick() {
-        if (graphPane != null) {
+        if (graphPane != null)
             graphPane.getChildren().clear();
-        }
-        if (graphPane1 != null) {
+        if (graphPane1 != null)
             graphPane1.getChildren().clear();
-        }
-        if (graphPane2 != null) {
+        if (graphPane2 != null)
             graphPane2.getChildren().clear();
-        }
-
+        nomeArquivo = null;
     }
 }
