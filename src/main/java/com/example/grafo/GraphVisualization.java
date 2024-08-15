@@ -64,7 +64,7 @@ public class GraphVisualization extends Pane {
 
             gc.fillOval(x - 15, y - 15, 30, 30);
             gc.setFill(Color.WHITE);
-            gc.fillText(labels[i], x - 10, y + 5);
+            gc.fillText(labels[i], x - 5, y + 5);
             gc.setFill(Color.RED);
         }
 

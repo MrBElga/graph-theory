@@ -61,29 +61,23 @@ public class Matriz {
 
     public static boolean isGrafoOrientado() {
         int tamanho = matrizAdjacencia.length;
-        for (int i = 0; i < tamanho; i++) {
-            for (int j = 0; j < tamanho; j++) {
-                if (matrizAdjacencia[i][j] != matrizAdjacencia[j][i]) {
+        for (int i = 0; i < tamanho; i++)
+            for (int j = 0; j < tamanho; j++)
+                if (matrizAdjacencia[i][j] != matrizAdjacencia[j][i])
                     return true;
-                }
-            }
-        }
         return false;
     }
 
     public static boolean isGrafoSimples() {
         int tamanho = matrizAdjacencia.length;
         for (int i = 0; i < tamanho; i++) {
-            if (matrizAdjacencia[i][i] != 0) {
-                return false; // Grafo não simples, pois tem laço
-            }
-            for (int j = 0; j < tamanho; j++) {
-                if (matrizAdjacencia[i][j] > 1) {
-                    return false; // Grafo não simples, pois tem múltiplas arestas
-                }
-            }
+            if (matrizAdjacencia[i][i] != 0)
+                return false; //caso grafo não simples tem laço
+            for (int j = 0; j < tamanho; j++)
+                if (matrizAdjacencia[i][j] > 1)
+                    return false; //caso grafo não simples tem múltiplas arestas (eu acho)
         }
-        return true;
+        return true; //eh simples
     }
 
     public static boolean isGrafoRegular() {
@@ -97,10 +91,10 @@ public class Matriz {
             if (grau == -1) {
                 grau = grauAtual;
             } else if (grau != grauAtual) {
-                return false; // Grafo não regular
+                return false; //caso não regular tem grau maior
             }
         }
-        return true;
+        return true;// eh regular
     }
 
     public static boolean isGrafoCompleto() {
@@ -112,6 +106,6 @@ public class Matriz {
                 contagemArestas += matrizAdjacencia[i][j];
             }
         }
-        return contagemArestas == totalArestas;
+        return contagemArestas == totalArestas; // retorna um true pq é igual o grua de todos
     }
 }
