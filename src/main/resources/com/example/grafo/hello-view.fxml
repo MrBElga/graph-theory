@@ -1,23 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="516.0" prefWidth="544.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.grafo.HelloController">
-   <top>
-        <Label fx:id="welcomeText" text="Welcome!" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane maxHeight="647.0" maxWidth="1200.0" minHeight="647.0" minWidth="1200.0" prefHeight="647.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
+    <top>
+        <Label fx:id="welcomeText" styleClass="welcome-label" text="ANALISADOR DE GRAFOS" BorderPane.alignment="CENTER" />
+    </top>
+    <center>
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10; -fx-border-color: #ffffff; -fx-border-width: 2;">
+            <!-- Seção do Grafo -->
+            <VBox alignment="CENTER" prefWidth="590.0" spacing="10.0">
+            <BorderPane prefHeight="561.0" prefWidth="578.0" styleClass="border-pane">
+               <top>
+                      <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="GRAFO" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                      <StackPane fx:id="graphPane" alignment="CENTER" prefHeight="256.0" prefWidth="578.0" BorderPane.alignment="CENTER">
+                     <styleClass>
+                        <String fx:value="pane-background" />
+                        <String fx:value="border-pane" />
+                     </styleClass>
+                  </StackPane>
+               </center>
+            </BorderPane>
+            </VBox>
+         <VBox alignment="CENTER" prefWidth="590.0" spacing="10.0">
+            <children>
+               <BorderPane prefHeight="548.0" prefWidth="578.0" styleClass="border-pane">
+                  <top>
+                     <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="MATRIZ" BorderPane.alignment="CENTER" />
+                  </top>
+                  <center>
+                     <StackPane fx:id="graphPane1" alignment="CENTER" prefHeight="109.0" prefWidth="578.0" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                  </center>
+                  <bottom>
+                     <BorderPane prefHeight="205.0" prefWidth="578.0" BorderPane.alignment="CENTER">
+                        <center>
+                           <StackPane fx:id="graphPane2" alignment="CENTER" prefHeight="173.0" prefWidth="578.0" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                        </center>
+                        <top>
+                           <Label prefHeight="29.0" prefWidth="578.0" style="-fx-background-radius: 0; -fx-border-radius: 0 0 0 0;" styleClass="section-title" text="ANALISE DO GRAFO" BorderPane.alignment="CENTER" />
+                        </top>
+                     </BorderPane>
+                  </bottom>
+               </BorderPane>
+            </children>
+         </VBox>
+        </HBox>
+    </center>
    <bottom>
-        <ToolBar prefHeight="49.0" prefWidth="544.0" BorderPane.alignment="CENTER">
-            <Button onAction="#onHelloButtonClick" text="Load Graph" />
-         <Button onAction="#onHelloButtonClick" text="Clear" />
+        <ToolBar prefHeight="29.0" prefWidth="1200.0" styleClass="toolbar-background" BorderPane.alignment="CENTER">
+            <TextField fx:id="fileNameField" promptText="Enter filename" />
+            <Button onAction="#onHelloButtonClick" text="Carregar Grafo" />
+            <Button onAction="#onClearButtonClick" text="Resetar" />
         </ToolBar>
    </bottom>
-   <center>
-       <Pane fx:id="graphPane" BorderPane.alignment="CENTER" />
-   </center>
 </BorderPane>

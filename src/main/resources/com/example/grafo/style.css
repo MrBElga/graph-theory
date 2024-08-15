@@ -1,0 +1,44 @@
+.main-background {
+    -fx-background-color: #1e1e1e;
+}
+
+.welcome-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
+.toolbar-background {
+    -fx-background-color: #2a2a2a;
+}
+
+.pane-background {
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-border-radius: 0 0 10 10;
+}
+
+.matrix-background {
+    -fx-background-color: #333333;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-border-radius: 0 0 10 10;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-color: #444444;
+    -fx-padding: 5;
+    -fx-alignment: center;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 10 10 0 0;
+}
+
+.border-pane{
+    -fx-border-radius: 0 0 10 10;
+}

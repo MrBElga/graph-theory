@@ -3,39 +3,33 @@ package com.example.grafo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Matriz {
 
-    private static String[] labels;
-    private static int[][] adjacencyMatrix;
+    private static String[] rotulos;
+    private static int[][] matrizAdjacencia;
 
-    public static void leitor() {
+    public static void leitor(String nome) {
         Matriz matriz = new Matriz();
-        matriz.lerArquivo();
+        matriz.lerArquivo(nome);
         matriz.analisarGrafo();
     }
 
-    private void lerArquivo() {
-        System.out.printf("Informe o nome do arquivo texto:\n");
-        Scanner scanner = new Scanner(System.in);
-        String nome = scanner.nextLine();
+    private void lerArquivo(String nome) {
         nome = nome.concat(".txt");
-        System.out.println(nome);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(nome))) {
-            String line = reader.readLine();
-            if (line != null) {
-                labels = line.split(",");
-                int size = labels.length;
-                adjacencyMatrix = new int[size][size];
+            String linha = reader.readLine();
+            if (linha != null) {
+                rotulos = linha.split(",");
+                int tamanho = rotulos.length;
+                matrizAdjacencia = new int[tamanho][tamanho];
 
                 int i = 0;
-                while ((line = reader.readLine()) != null) {
-                    String[] values = line.split(",");
-                    for (int j = 0; j < values.length; j++) {
-                        adjacencyMatrix[i][j] = Integer.parseInt(values[j]);
+                while ((linha = reader.readLine()) != null) {
+                    String[] valores = linha.split(",");
+                    for (int j = 0; j < valores.length; j++) {
+                        matrizAdjacencia[i][j] = Integer.parseInt(valores[j]);
                     }
                     i++;
                 }
@@ -45,31 +39,31 @@ public class Matriz {
         }
     }
 
-    public static int[][] getAdjacencyMatrix() {
-        return adjacencyMatrix;
+    public static int[][] getMatrizAdjacencia() {
+        return matrizAdjacencia;
     }
 
-    public static String[] getLabels() {
-        return labels;
+    public static String[] getRotulos() {
+        return rotulos;
     }
 
-    private void analisarGrafo() {
-        boolean isDirected = isGrafoOrientado();
-        boolean isSimple = isGrafoSimples();
-        boolean isRegular = isGrafoRegular();
-        boolean isComplete = isGrafoCompleto();
+    public void analisarGrafo() {
+        boolean orientado = isGrafoOrientado();
+        boolean simples = isGrafoSimples();
+        boolean regular = isGrafoRegular();
+        boolean completo = isGrafoCompleto();
 
-        System.out.println("Grafo Orientado: " + isDirected);
-        System.out.println("Grafo Simples: " + isSimple);
-        System.out.println("Grafo Regular: " + isRegular);
-        System.out.println("Grafo Completo: " + isComplete);
+        System.out.println("Grafo Orientado: " + orientado);
+        System.out.println("Grafo Simples: " + simples);
+        System.out.println("Grafo Regular: " + regular);
+        System.out.println("Grafo Completo: " + completo);
     }
 
-    private boolean isGrafoOrientado() {
-        int size = adjacencyMatrix.length;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (adjacencyMatrix[i][j] != adjacencyMatrix[j][i]) {
+    public static boolean isGrafoOrientado() {
+        int tamanho = matrizAdjacencia.length;
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if (matrizAdjacencia[i][j] != matrizAdjacencia[j][i]) {
                     return true;
                 }
             }
@@ -77,14 +71,14 @@ public class Matriz {
         return false;
     }
 
-    private boolean isGrafoSimples() {
-        int size = adjacencyMatrix.length;
-        for (int i = 0; i < size; i++) {
-            if (adjacencyMatrix[i][i] != 0) {
+    public static boolean isGrafoSimples() {
+        int tamanho = matrizAdjacencia.length;
+        for (int i = 0; i < tamanho; i++) {
+            if (matrizAdjacencia[i][i] != 0) {
                 return false; // Grafo não simples, pois tem laço
             }
-            for (int j = 0; j < size; j++) {
-                if (adjacencyMatrix[i][j] > 1) {
+            for (int j = 0; j < tamanho; j++) {
+                if (matrizAdjacencia[i][j] > 1) {
                     return false; // Grafo não simples, pois tem múltiplas arestas
                 }
             }
@@ -92,32 +86,32 @@ public class Matriz {
         return true;
     }
 
-    private boolean isGrafoRegular() {
-        int size = adjacencyMatrix.length;
-        int degree = -1;
-        for (int i = 0; i < size; i++) {
-            int currentDegree = 0;
-            for (int j = 0; j < size; j++) {
-                currentDegree += adjacencyMatrix[i][j];
+    public static boolean isGrafoRegular() {
+        int tamanho = matrizAdjacencia.length;
+        int grau = -1;
+        for (int i = 0; i < tamanho; i++) {
+            int grauAtual = 0;
+            for (int j = 0; j < tamanho; j++) {
+                grauAtual += matrizAdjacencia[i][j];
             }
-            if (degree == -1) {
-                degree = currentDegree;
-            } else if (degree != currentDegree) {
+            if (grau == -1) {
+                grau = grauAtual;
+            } else if (grau != grauAtual) {
                 return false; // Grafo não regular
             }
         }
         return true;
     }
 
-    private boolean isGrafoCompleto() {
-        int size = adjacencyMatrix.length;
-        int totalEdges = size * (size - 1);
-        int edgeCount = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = i + 1; j < size; j++) {
-                edgeCount += adjacencyMatrix[i][j];
+    public static boolean isGrafoCompleto() {
+        int tamanho = matrizAdjacencia.length;
+        int totalArestas = tamanho * (tamanho - 1);
+        int contagemArestas = 0;
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = i + 1; j < tamanho; j++) {
+                contagemArestas += matrizAdjacencia[i][j];
             }
         }
-        return edgeCount == totalEdges;
+        return contagemArestas == totalArestas;
     }
 }
