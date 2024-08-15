@@ -11,12 +11,11 @@ public class HelloController {
     private Label welcomeText;
 
     @FXML
-    private Pane graphPane;  // Add this pane to your FXML layout
+    private Pane graphPane;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-        welcomeText.setText("Welcome to JavaFX Application!");
-        Matriz.leitor(); // Carrega a matriz e os rótulos
+        Matriz.leitor();
 
         int[][] adjacencyMatrix = Matriz.getAdjacencyMatrix();
         String[] labels = Matriz.getLabels();

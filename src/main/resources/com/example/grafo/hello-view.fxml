@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-
-
 <?import javafx.scene.control.Button?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
-    <top>
-        <ToolBar>
-            <Button text="Load Graph" onAction="#onHelloButtonClick"/>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane prefHeight="516.0" prefWidth="544.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.grafo.HelloController">
+   <top>
+        <Label fx:id="welcomeText" text="Welcome!" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+        <ToolBar prefHeight="49.0" prefWidth="544.0" BorderPane.alignment="CENTER">
+            <Button onAction="#onHelloButtonClick" text="Load Graph" />
+         <Button onAction="#onHelloButtonClick" text="Clear" />
         </ToolBar>
-    </top>
-    <center>
-        <Pane fx:id="graphPane" />
-    </center>
-    <bottom>
-        <Label fx:id="welcomeText" text="Welcome!" />
-    </bottom>
+   </bottom>
+   <center>
+       <Pane fx:id="graphPane" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
