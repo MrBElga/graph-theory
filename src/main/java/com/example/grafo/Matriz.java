@@ -48,10 +48,10 @@ public class Matriz {
     }
 
     public void analisarGrafo() {
-        boolean orientado = isGrafoOrientado();
-        boolean simples = isGrafoSimples();
-        boolean regular = isGrafoRegular();
-        boolean completo = isGrafoCompleto();
+        boolean orientado = grafoOrientado();
+        boolean simples = grafoSimples();
+        boolean regular = grafoRegular();
+        boolean completo = grafoCompleto();
 
         System.out.println("Grafo Orientado: " + orientado);
         System.out.println("Grafo Simples: " + simples);
@@ -59,7 +59,7 @@ public class Matriz {
         System.out.println("Grafo Completo: " + completo);
     }
 
-    public static boolean isGrafoOrientado() {
+    public static boolean grafoOrientado() {
         int tamanho = matrizAdjacencia.length;
         for (int i = 0; i < tamanho; i++)
             for (int j = 0; j < tamanho; j++)
@@ -68,7 +68,7 @@ public class Matriz {
         return false;
     }
 
-    public static boolean isGrafoSimples() {
+    public static boolean grafoSimples() {
         int tamanho = matrizAdjacencia.length;
         for (int i = 0; i < tamanho; i++)
             if (matrizAdjacencia[i][i] != 0)
@@ -76,7 +76,7 @@ public class Matriz {
         return true; //eh simples
     }
 
-    public static boolean isGrafoRegular() {
+    public static boolean grafoRegular() {
         int tamanho = matrizAdjacencia.length;
         int grau = -1;
         for (int i = 0; i < tamanho; i++) {
@@ -91,7 +91,7 @@ public class Matriz {
         return true;// eh regular
     }
 
-    public static boolean isGrafoCompleto() {
+    public static boolean grafoCompleto() {
         int tamanho = matrizAdjacencia.length;
         int totalArestas = tamanho * (tamanho - 1);
         int contagemArestas = 0;
