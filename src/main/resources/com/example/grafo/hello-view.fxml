@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="647.0" maxWidth="1200.0" minHeight="647.0" minWidth="1200.0" prefHeight="647.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
+<BorderPane maxHeight="647.0" maxWidth="1200.0" minHeight="647.0" minWidth="1200.0" prefHeight="647.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
     <top>
         <Label fx:id="welcomeText" styleClass="welcome-label" text="ANALISADOR DE GRAFOS" BorderPane.alignment="CENTER" />
     </top>
@@ -23,7 +23,7 @@
                       <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="GRAFO" BorderPane.alignment="CENTER" />
                </top>
                <center>
-                      <StackPane fx:id="graphPane" alignment="CENTER" prefHeight="256.0" prefWidth="578.0" BorderPane.alignment="CENTER">
+                      <StackPane fx:id="graphPane" alignment="CENTER" prefHeight="256.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER">
                      <styleClass>
                         <String fx:value="pane-background" />
                         <String fx:value="border-pane" />
@@ -39,12 +39,12 @@
                      <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="MATRIZ" BorderPane.alignment="CENTER" />
                   </top>
                   <center>
-                     <StackPane fx:id="graphPane1" alignment="CENTER" prefHeight="109.0" prefWidth="578.0" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                     <StackPane fx:id="graphPane1" alignment="CENTER" prefHeight="109.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER" />
                   </center>
                   <bottom>
                      <BorderPane prefHeight="205.0" prefWidth="578.0" BorderPane.alignment="CENTER">
                         <center>
-                           <StackPane fx:id="graphPane2" alignment="CENTER" prefHeight="173.0" prefWidth="578.0" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                           <StackPane fx:id="graphPane2" alignment="CENTER" prefHeight="173.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: white;" styleClass="pane-background" BorderPane.alignment="CENTER" />
                         </center>
                         <top>
                            <Label prefHeight="29.0" prefWidth="578.0" style="-fx-background-radius: 0; -fx-border-radius: 0 0 0 0;" styleClass="section-title" text="ANALISE DO GRAFO" BorderPane.alignment="CENTER" />

@@ -37,6 +37,7 @@ public class HelloController {
             graphPane.getChildren().clear();
             GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
             graphPane.getChildren().add(visualizacaoGrafo);
+
         }
 
         // Exibir a matriz
@@ -44,6 +45,7 @@ public class HelloController {
             graphPane1.getChildren().clear();
             MatrizVisualization visualizacaoMatriz = new MatrizVisualization(matrizAdjacencia, rotulos);
             graphPane1.getChildren().add(visualizacaoMatriz);
+            graphPane1.setStyle(" -fx-padding: 10;-fx-alignment: center-left; -fx-background-color: #363636");
         }
 
         // Exibir a análise
@@ -58,10 +60,12 @@ public class HelloController {
 
             Text analiseText = new Text(analise.toString());
             analiseText.setFont(new Font("Arial", 14));
-            analiseText.setFill(Color.BLACK);
+            String hexColor = "#ACACAC";
+            Color color = Color.web(hexColor);
+            analiseText.setFill(color   );
 
             graphPane2.getChildren().add(analiseText);
-            graphPane2.setStyle(" -fx-padding: 10;-fx-alignment: center-left;");
+            graphPane2.setStyle(" -fx-padding: 10;-fx-alignment: center-left; -fx-background-color: #363636");
         }
     }
 

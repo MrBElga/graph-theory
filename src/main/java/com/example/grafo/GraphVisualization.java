@@ -1,11 +1,10 @@
 package com.example.grafo;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class GraphVisualization extends Pane {
 
@@ -16,11 +15,10 @@ public class GraphVisualization extends Pane {
         this.matrizAdj = matrizAdj;
         this.labels = labels;
 
-        // Adiciona um listener para quando o tamanho do Pane muda
+        // para quando o tamanho do Pane muda
         widthProperty().addListener((obs, oldVal, newVal) -> drawGraph());
         heightProperty().addListener((obs, oldVal, newVal) -> drawGraph());
 
-        // Inicializa o canvas e a visualização
         drawGraph();
     }
 
@@ -28,26 +26,25 @@ public class GraphVisualization extends Pane {
         double paneWidth = getWidth();
         double paneHeight = getHeight();
 
-        // Remove o canvas antigo, se houver
+        // Remove o canvas antigo
         getChildren().clear();
 
-        // Criar um novo canvas com as dimensões atuais do Pane
         Canvas canvas = new Canvas(paneWidth, paneHeight);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(Color.WHITE);
+        String hexColor = "#363636";
+        Color color = Color.web(hexColor);
+        gc.setFill(color);
         gc.fillRect(0, 0, paneWidth, paneHeight);
 
         int nodeCount = labels.length;
 
-        // Definindo margens e espaçamento para que os pontos não fiquem na borda do Pane
         double margin = 50;
         double gridSize = Math.ceil(Math.sqrt(nodeCount));
         double cellSize = (Math.min(paneWidth, paneHeight) - 2 * margin) / gridSize;
 
         double[][] positions = new double[nodeCount][2];
 
-        // Definindo posições para os nós (vértices) em uma grade
         for (int i = 0; i < nodeCount; i++) {
             int row = i / (int)gridSize;
             int col = i % (int)gridSize;
@@ -57,19 +54,27 @@ public class GraphVisualization extends Pane {
         }
 
         // Desenhar vértices
-        gc.setFill(Color.RED);
+        hexColor = "#ACACAC";
+        color = Color.web(hexColor);
+        gc.setFont(new Font("Stencil", 14));
+        gc.setFill(color);
         for (int i = 0; i < nodeCount; i++) {
             double x = positions[i][0];
             double y = positions[i][1];
 
             gc.fillOval(x - 15, y - 15, 30, 30);
-            gc.setFill(Color.WHITE);
+            hexColor = "#262626";
+            color = Color.web(hexColor);
+            gc.setFill(color);
             gc.fillText(labels[i], x - 5, y + 5);
-            gc.setFill(Color.RED);
+            hexColor = "#ACACAC";
+            color = Color.web(hexColor);
+            gc.setFill(color);
+
         }
 
         // Desenhar arestas
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.WHITE);
         gc.setLineWidth(2);
         for (int i = 0; i < nodeCount; i++) {
             for (int j = 0; j < nodeCount; j++) {
@@ -79,7 +84,6 @@ public class GraphVisualization extends Pane {
                     double x2 = positions[j][0];
                     double y2 = positions[j][1];
 
-                    // Ajusta o comprimento das linhas para que não toquem as bordas dos nós
                     double dx = x2 - x1;
                     double dy = y2 - y1;
                     double length = Math.sqrt(dx * dx + dy * dy);
@@ -93,7 +97,6 @@ public class GraphVisualization extends Pane {
                 }
             }
         }
-
         getChildren().add(canvas);
     }
 }

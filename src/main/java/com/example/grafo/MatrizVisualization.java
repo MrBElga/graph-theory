@@ -24,13 +24,13 @@ public class MatrizVisualization extends GridPane {
         for (int i = 0; i < matrix.length; i++) {
             Label rowLabel = new Label(labels[i]);
             rowLabel.setFont(new Font("Arial", 14));
-            rowLabel.setTextFill(Color.BLUE);
+            rowLabel.setTextFill(Color.GREEN);
             add(rowLabel, 0, i + 1);
 
             for (int j = 0; j < matrix[i].length; j++) {
                 Text text = new Text(Integer.toString(matrix[i][j]));
                 text.setFont(new Font("Arial", 14));
-                text.setFill(Color.BLACK);
+                text.setFill(Color.WHITE);
                 add(text, j + 1, i + 1);
             }
         }

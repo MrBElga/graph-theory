@@ -70,13 +70,9 @@ public class Matriz {
 
     public static boolean isGrafoSimples() {
         int tamanho = matrizAdjacencia.length;
-        for (int i = 0; i < tamanho; i++) {
+        for (int i = 0; i < tamanho; i++)
             if (matrizAdjacencia[i][i] != 0)
                 return false; //caso grafo não simples tem laço
-            for (int j = 0; j < tamanho; j++)
-                if (matrizAdjacencia[i][j] > 1)
-                    return false; //caso grafo não simples tem múltiplas arestas (eu acho)
-        }
         return true; //eh simples
     }
 
@@ -85,14 +81,12 @@ public class Matriz {
         int grau = -1;
         for (int i = 0; i < tamanho; i++) {
             int grauAtual = 0;
-            for (int j = 0; j < tamanho; j++) {
+            for (int j = 0; j < tamanho; j++)
                 grauAtual += matrizAdjacencia[i][j];
-            }
-            if (grau == -1) {
+            if (grau == -1)
                 grau = grauAtual;
-            } else if (grau != grauAtual) {
+            else if (grau != grauAtual)
                 return false; //caso não regular tem grau maior
-            }
         }
         return true;// eh regular
     }
@@ -101,11 +95,9 @@ public class Matriz {
         int tamanho = matrizAdjacencia.length;
         int totalArestas = tamanho * (tamanho - 1);
         int contagemArestas = 0;
-        for (int i = 0; i < tamanho; i++) {
-            for (int j = i + 1; j < tamanho; j++) {
+        for (int i = 0; i < tamanho; i++)
+            for (int j = i + 1; j < tamanho; j++)
                 contagemArestas += matrizAdjacencia[i][j];
-            }
-        }
         return contagemArestas == totalArestas; // retorna um true pq é igual o grua de todos
     }
 }
