@@ -93,11 +93,18 @@ public class Matriz {
 
     public static boolean grafoCompleto() {
         int tamanho = matrizAdjacencia.length;
-        int totalArestas = tamanho * (tamanho - 1);
-        int contagemArestas = 0;
-        for (int i = 0; i < tamanho; i++)
-            for (int j = i + 1; j < tamanho; j++)
-                contagemArestas += matrizAdjacencia[i][j];
-        return contagemArestas == totalArestas; // retorna um true pq é igual o grua de todos
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if (i == j) {
+                    if (matrizAdjacencia[i][j] != 0) // Verifica se a diagonal principal é 0
+                        return false;
+                } else {
+
+                    if (matrizAdjacencia[i][j] != 1) // Verifica se os elementos fora da diagonal principal são 1
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 }
