@@ -96,11 +96,10 @@ public class Matriz {
         for (int i = 0; i < tamanho; i++) {
             for (int j = 0; j < tamanho; j++) {
                 if (i == j) {
-                    if (matrizAdjacencia[i][j] != 0) // Verifica se a diagonal principal é 0
+                    if (matrizAdjacencia[i][j] != 0) //  se  diagonal principal é 0
                         return false;
                 } else {
-
-                    if (matrizAdjacencia[i][j] != 1) // Verifica se os elementos fora da diagonal principal são 1
+                    if (matrizAdjacencia[i][j] != 1) //  se  elementos fora da diagonal principal são 1
                         return false;
                 }
             }
