@@ -53,10 +53,10 @@ public class HelloController {
             graphPane2.getChildren().clear();
 
             StringBuilder analise = new StringBuilder();
-            analise.append("Grafo Orientado: ").append(Matriz.isGrafoOrientado() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Simples: ").append(Matriz.isGrafoSimples() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Regular: ").append(Matriz.isGrafoRegular() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Completo: ").append(Matriz.isGrafoCompleto() ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado() ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Simples: ").append(Matriz.grafoSimples() ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Regular: ").append(Matriz.grafoRegular() ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Completo: ").append(Matriz.grafoCompleto() ? "Sim" : "Não").append("\n");
 
             Text analiseText = new Text(analise.toString());
             analiseText.setFont(new Font("Arial", 14));
