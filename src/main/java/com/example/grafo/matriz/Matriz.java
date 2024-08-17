@@ -1,57 +1,12 @@
 package com.example.grafo.matriz;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class Matriz {
 
-    private static String[] rotulos;
-    private static int[][] matrizAdjacencia;
-
-    public static void leitor(String nome) {
-        Matriz matriz = new Matriz();
-        matriz.lerArquivo(nome);
-        matriz.analisarGrafo();
-    }
-
-    private void lerArquivo(String nome) {
-        nome = nome.concat(".txt");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(nome))) {
-            String linha = reader.readLine();
-            if (linha != null) {
-                rotulos = linha.split(",");
-                int tamanho = rotulos.length;
-                matrizAdjacencia = new int[tamanho][tamanho];
-
-                int i = 0;
-                while ((linha = reader.readLine()) != null) {
-                    String[] valores = linha.split(",");
-                    for (int j = 0; j < valores.length; j++) {
-                        matrizAdjacencia[i][j] = Integer.parseInt(valores[j]);
-                    }
-                    i++;
-                }
-            }
-        } catch (IOException e) {
-            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
-        }
-    }
-
-    public static int[][] getMatrizAdjacencia() {
-        return matrizAdjacencia;
-    }
-
-    public static String[] getRotulos() {
-        return rotulos;
-    }
-
-    public void analisarGrafo() {
-        boolean orientado = grafoOrientado();
-        boolean simples = grafoSimples();
-        boolean regular = grafoRegular();
-        boolean completo = grafoCompleto();
+    public void analisarGrafo(int[][] matrizAdjacencia) {
+        boolean orientado = grafoOrientado(matrizAdjacencia);
+        boolean simples = grafoSimples(matrizAdjacencia);
+        boolean regular = grafoRegular(matrizAdjacencia);
+        boolean completo = grafoCompleto(matrizAdjacencia);
 
         System.out.println("Grafo Orientado: " + orientado);
         System.out.println("Grafo Simples: " + simples);
@@ -59,51 +14,60 @@ public class Matriz {
         System.out.println("Grafo Completo: " + completo);
     }
 
-    public static boolean grafoOrientado() {
+    public static boolean grafoOrientado(int[][] matrizAdjacencia) {
         int tamanho = matrizAdjacencia.length;
-        for (int i = 0; i < tamanho; i++)
-            for (int j = 0; j < tamanho; j++)
-                if (matrizAdjacencia[i][j] != matrizAdjacencia[j][i])
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if (matrizAdjacencia[i][j] != matrizAdjacencia[j][i]) {
                     return true;
+                }
+            }
+        }
         return false;
     }
 
-    public static boolean grafoSimples() {
+    public static boolean grafoSimples(int[][] matrizAdjacencia) {
         int tamanho = matrizAdjacencia.length;
-        for (int i = 0; i < tamanho; i++)
-            if (matrizAdjacencia[i][i] != 0)
-                return false; //caso grafo não simples tem laço
-        return true; //eh simples
+        for (int i = 0; i < tamanho; i++) {
+            if (matrizAdjacencia[i][i] != 0) {
+                return false; // Grafo não é simples se houver laços
+            }
+        }
+        return true; // É simples
     }
 
-    public static boolean grafoRegular() {
+    public static boolean grafoRegular(int[][] matrizAdjacencia) {
         int tamanho = matrizAdjacencia.length;
         int grau = -1;
         for (int i = 0; i < tamanho; i++) {
             int grauAtual = 0;
-            for (int j = 0; j < tamanho; j++)
+            for (int j = 0; j < tamanho; j++) {
                 grauAtual += matrizAdjacencia[i][j];
-            if (grau == -1)
+            }
+            if (grau == -1) {
                 grau = grauAtual;
-            else if (grau != grauAtual)
-                return false; //caso não regular tem grau maior
+            } else if (grau != grauAtual) {
+                return false; // Não é regular se houver diferentes graus
+            }
         }
-        return true;// eh regular
+        return true; // É regular
     }
 
-    public static boolean grafoCompleto() {
+    public static boolean grafoCompleto(int[][] matrizAdjacencia) {
         int tamanho = matrizAdjacencia.length;
         for (int i = 0; i < tamanho; i++) {
             for (int j = 0; j < tamanho; j++) {
                 if (i == j) {
-                    if (matrizAdjacencia[i][j] != 0) //  se  diagonal principal é 0
+                    if (matrizAdjacencia[i][j] != 0) { // A diagonal principal deve ser 0
                         return false;
+                    }
                 } else {
-                    if (matrizAdjacencia[i][j] != 1) //  se  elementos fora da diagonal principal são 1
+                    if (matrizAdjacencia[i][j] != 1) { // Os outros elementos devem ser 1
                         return false;
+                    }
                 }
             }
         }
-        return true;
+        return true; // É completo
     }
 }
