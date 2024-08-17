@@ -1,5 +1,10 @@
 package com.example.grafo.matriz;
 
+import com.example.grafo.lista.Lista;
+import com.example.grafo.lista.No;
+
+import java.util.Arrays;
+
 public class Matriz {
 
     public void analisarGrafo(int[][] matrizAdjacencia) {
@@ -63,4 +68,21 @@ public class Matriz {
         }
         return true; // É completo
     }
+
+    public int[][] listaParaMatriz(Lista[] listaAdjacencia, String[] rotulos) {
+        int tamanho = rotulos.length;
+        int[][] matrizAdjacencia = new int[tamanho][tamanho];
+
+        for (int i = 0; i < tamanho; i++) {
+            No atual = listaAdjacencia[i].getInicio();
+            while (atual != null) {
+                String[] vertices = atual.getAresta().split(" -> ");
+                int j = Arrays.asList(rotulos).indexOf(vertices[1]);
+                matrizAdjacencia[i][j] = atual.getCusto();
+                atual = atual.getProx();
+            }
+        }
+        return matrizAdjacencia;
+    }
+
 }

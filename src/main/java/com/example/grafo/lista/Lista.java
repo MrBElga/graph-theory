@@ -32,4 +32,8 @@ public class Lista {
             atual = atual.getProx();
         }
     }
+
+    public No getInicio() {
+        return inicio;
+    }
 }

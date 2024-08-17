@@ -102,6 +102,8 @@ public class HelloController {
             if (linha != null) {
                 rotulos = linha.split(",");
                 int tamanho = rotulos.length;
+
+
                 matrizAdjacencia = new int[tamanho][tamanho];
                 Lista[] listaAdjacencia = new Lista[tamanho];
 
