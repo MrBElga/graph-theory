@@ -2,6 +2,7 @@ package com.example.grafo;
 
 import com.example.grafo.graficos.GraphVisualization;
 import com.example.grafo.graficos.MatrizVisualization;
+import com.example.grafo.lista.Lista;
 import com.example.grafo.matriz.Matriz;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -95,24 +96,41 @@ public class HelloController {
     private static void lerArquivo(String nome) {
         String caminhoArquivo = Paths.get("src/main/java/com/example/grafo/arquivosTxt", nome + ".txt").toString();
         System.out.println(caminhoArquivo);
+
         try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
             String linha = reader.readLine();
             if (linha != null) {
                 rotulos = linha.split(",");
                 int tamanho = rotulos.length;
                 matrizAdjacencia = new int[tamanho][tamanho];
+                Lista[] listaAdjacencia = new Lista[tamanho];
+
+                for (int i = 0; i < tamanho; i++) {
+                    listaAdjacencia[i] = new Lista();
+                }
 
                 int i = 0;
                 while ((linha = reader.readLine()) != null) {
                     String[] valores = linha.split(",");
                     for (int j = 0; j < valores.length; j++) {
                         matrizAdjacencia[i][j] = Integer.parseInt(valores[j]);
+                        if (matrizAdjacencia[i][j] != 0) {
+                            String aresta = rotulos[i] + " -> " + rotulos[j];
+                            listaAdjacencia[i].inserirFim(aresta, matrizAdjacencia[i][j]);
+                        }
                     }
                     i++;
+                }
+
+                // Exibir a lista de adjacência
+                for (int k = 0; k < tamanho; k++) {
+                    System.out.println("Vértice " + rotulos[k] + ": ");
+                    listaAdjacencia[k].exibirLista();
                 }
             }
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
     }
+
 }
