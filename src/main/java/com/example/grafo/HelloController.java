@@ -9,8 +9,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
-import java.io.IOException;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class HelloController {
 
@@ -25,22 +28,22 @@ public class HelloController {
 
     @FXML
     private StackPane graphPane2;
+
+    private static String[] rotulos;
+    private static int[][] matrizAdjacencia;
     private String nomeArquivo = null;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
         nomeArquivo = fileNameField.getText();
-        Matriz.leitor(nomeArquivo);
 
-        int[][] matrizAdjacencia = Matriz.getMatrizAdjacencia();
-        String[] rotulos = Matriz.getRotulos();
+        leitor(nomeArquivo);
 
         // Exibir o grafo
         if (graphPane != null) {
             graphPane.getChildren().clear();
             GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
             graphPane.getChildren().add(visualizacaoGrafo);
-
         }
 
         // Exibir a matriz
@@ -56,16 +59,16 @@ public class HelloController {
             graphPane2.getChildren().clear();
 
             StringBuilder analise = new StringBuilder();
-            analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Simples: ").append(Matriz.grafoSimples() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Regular: ").append(Matriz.grafoRegular() ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Completo: ").append(Matriz.grafoCompleto() ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Simples: ").append(Matriz.grafoSimples(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Regular: ").append(Matriz.grafoRegular(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+            analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
 
             Text analiseText = new Text(analise.toString());
             analiseText.setFont(new Font("Arial", 14));
             String hexColor = "#ACACAC";
             Color color = Color.web(hexColor);
-            analiseText.setFill(color   );
+            analiseText.setFill(color);
 
             graphPane2.getChildren().add(analiseText);
             graphPane2.setStyle(" -fx-padding: 10;-fx-alignment: center-left; -fx-background-color: #363636");
@@ -81,5 +84,35 @@ public class HelloController {
         if (graphPane2 != null)
             graphPane2.getChildren().clear();
         nomeArquivo = null;
+    }
+
+    public static void leitor(String nome) {
+        Matriz matriz = new Matriz();
+        lerArquivo(nome);
+        matriz.analisarGrafo(matrizAdjacencia);
+    }
+
+    private static void lerArquivo(String nome) {
+        String caminhoArquivo = Paths.get("src/main/java/com/example/grafo/arquivosTxt", nome + ".txt").toString();
+        System.out.println(caminhoArquivo);
+        try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String linha = reader.readLine();
+            if (linha != null) {
+                rotulos = linha.split(",");
+                int tamanho = rotulos.length;
+                matrizAdjacencia = new int[tamanho][tamanho];
+
+                int i = 0;
+                while ((linha = reader.readLine()) != null) {
+                    String[] valores = linha.split(",");
+                    for (int j = 0; j < valores.length; j++) {
+                        matrizAdjacencia[i][j] = Integer.parseInt(valores[j]);
+                    }
+                    i++;
+                }
+            }
+        } catch (IOException e) {
+            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
+        }
     }
 }
