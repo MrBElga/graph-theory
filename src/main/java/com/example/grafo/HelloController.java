@@ -1,5 +1,8 @@
 package com.example.grafo;
 
+import com.example.grafo.graficos.GraphVisualization;
+import com.example.grafo.graficos.MatrizVisualization;
+import com.example.grafo.matriz.Matriz;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;

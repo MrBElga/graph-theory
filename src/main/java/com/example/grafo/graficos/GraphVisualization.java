@@ -1,4 +1,4 @@
-package com.example.grafo;
+package com.example.grafo.graficos;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

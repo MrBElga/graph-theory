@@ -1,4 +1,4 @@
-package com.example.grafo;
+package com.example.grafo.graficos;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;

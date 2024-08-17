@@ -1,4 +1,4 @@
-package com.example.grafo;
+package com.example.grafo.matriz;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
