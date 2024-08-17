@@ -23,6 +23,11 @@ src/
 │   │   └── com/
 │   │       └── example/
 │   │           └── grafo/
+│   │               │
+│   │               ├── arquivosTxt
+│   │               │   ├──mat0.txt
+│   │               │   └──mat1.txt
+│   │               │
 │   │               ├── graficos/
 │   │               │   ├── GraphVisualization.java
 │   │               │   └── MatrizVisualization.java
