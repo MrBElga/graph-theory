@@ -69,20 +69,28 @@ public class Matriz {
         return true; // É completo
     }
 
-    public int[][] listaParaMatriz(Lista[] listaAdjacencia, String[] rotulos) {
-        int tamanho = rotulos.length;
-        int[][] matrizAdjacencia = new int[tamanho][tamanho];
 
-        for (int i = 0; i < tamanho; i++) {
-            No atual = listaAdjacencia[i].getInicio();
+    public static int[][] listaParaMatriz(Lista[] lista, String[] rotulos) {
+        int n = lista.length;
+        int[][] matriz = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            com.example.grafo.lista.No atual = lista[i].getInicio();
             while (atual != null) {
-                String[] vertices = atual.getAresta().split(" -> ");
-                int j = Arrays.asList(rotulos).indexOf(vertices[1]);
-                matrizAdjacencia[i][j] = atual.getCusto();
+                int j = findIndex(rotulos, atual.getAresta().split(" -> ")[1]);
+                matriz[i][j] = atual.getCusto();
                 atual = atual.getProx();
             }
         }
-        return matrizAdjacencia;
+        return matriz;
+    }
+
+    private static int findIndex(String[] rotulos, String rotulo) {
+        for (int i = 0; i < rotulos.length; i++) {
+            if (rotulos[i].equals(rotulo)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

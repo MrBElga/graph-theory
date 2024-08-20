@@ -1,5 +1,9 @@
 package com.example.grafo.lista;
 
+import java.util.Objects;
+
+import static com.example.grafo.HelloController.rotulos;
+
 public class Lista {
     private No inicio;
 
@@ -35,5 +39,22 @@ public class Lista {
 
     public No getInicio() {
         return inicio;
+    }
+
+
+
+
+    public static Lista[] matrizParaLista(int[][] matriz, String[] rotulos) {
+        int n = matriz.length;
+        Lista[] listaAdjacencia = new Lista[n];
+        for (int i = 0; i < n; i++) {
+            listaAdjacencia[i] = new Lista();
+            for (int j = 0; j < n; j++) {
+                if (matriz[i][j] != 0) {
+                    listaAdjacencia[i].inserirFim(rotulos[j], matriz[i][j]);
+                }
+            }
+        }
+        return listaAdjacencia;
     }
 }

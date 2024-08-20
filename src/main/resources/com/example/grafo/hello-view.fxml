@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="647.0" maxWidth="1200.0" minHeight="647.0" minWidth="1200.0" prefHeight="647.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
+<?import javafx.collections.FXCollections?>
+<BorderPane maxHeight="647.0" maxWidth="1200.0" minHeight="647.0" minWidth="1200.0" prefHeight="647.0" prefWidth="1200.0" styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafo.HelloController">
     <top>
         <Label fx:id="welcomeText" styleClass="welcome-label" text="ANALISADOR DE GRAFOS" BorderPane.alignment="CENTER" />
     </top>
@@ -19,55 +20,62 @@
         <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10; -fx-border-color: #ffffff; -fx-border-width: 2;">
             <!-- Seção do Grafo -->
             <VBox alignment="CENTER" prefWidth="590.0" spacing="10.0">
-            <BorderPane prefHeight="561.0" prefWidth="578.0" styleClass="border-pane">
-               <top>
-                      <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="GRAFO" BorderPane.alignment="CENTER" />
-               </top>
-               <center>
-                      <StackPane fx:id="graphPane" alignment="CENTER" prefHeight="256.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER">
-                     <styleClass>
-                        <String fx:value="pane-background" />
-                        <String fx:value="border-pane" />
-                     </styleClass>
-                  </StackPane>
-               </center>
-            </BorderPane>
+                <BorderPane prefHeight="561.0" prefWidth="578.0" styleClass="border-pane">
+                    <top>
+                        <Label prefHeight="55.0" prefWidth="578.0" styleClass="section-title" text="GRAFO" BorderPane.alignment="CENTER" />
+                    </top>
+                    <center>
+                        <StackPane fx:id="graphPane" alignment="CENTER" prefHeight="256.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER">
+                            <styleClass>
+                                <String fx:value="pane-background" />
+                                <String fx:value="border-pane" />
+                            </styleClass>
+                        </StackPane>
+                    </center>
+                </BorderPane>
             </VBox>
-         <VBox alignment="CENTER" prefWidth="590.0" spacing="10.0">
-            <children>
-               <BorderPane prefHeight="548.0" prefWidth="578.0" styleClass="border-pane">
-                  <center>
-                     <StackPane fx:id="graphPane1" alignment="CENTER" prefHeight="109.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER" />
-                  </center>
-                  <bottom>
-                     <BorderPane prefHeight="205.0" prefWidth="578.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefWidth="590.0" spacing="10.0">
+                <children>
+                    <BorderPane prefHeight="548.0" prefWidth="578.0" styleClass="border-pane">
                         <center>
-                           <StackPane fx:id="graphPane2" alignment="CENTER" prefHeight="173.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: white;" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                            <StackPane fx:id="graphPane1" alignment="CENTER" prefHeight="109.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: WHITE;" BorderPane.alignment="CENTER" />
                         </center>
+                        <bottom>
+                            <BorderPane prefHeight="205.0" prefWidth="578.0" BorderPane.alignment="CENTER">
+                                <center>
+                                    <StackPane fx:id="graphPane2" alignment="CENTER" prefHeight="173.0" prefWidth="578.0" style="-fx-background-color: #363636; -fx-border-color: white;" styleClass="pane-background" BorderPane.alignment="CENTER" />
+                                </center>
+                                <top>
+                                    <Label prefHeight="29.0" prefWidth="578.0" style="-fx-background-radius: 0; -fx-border-radius: 0 0 0 0;" styleClass="section-title" text="ANALISE DO GRAFO" BorderPane.alignment="CENTER" />
+                                </top>
+                            </BorderPane>
+                        </bottom>
                         <top>
-                           <Label prefHeight="29.0" prefWidth="578.0" style="-fx-background-radius: 0; -fx-border-radius: 0 0 0 0;" styleClass="section-title" text="ANALISE DO GRAFO" BorderPane.alignment="CENTER" />
+                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="section-title" BorderPane.alignment="CENTER">
+                                <children>
+                                    <Label fx:id="matlist" depthTest="DISABLE" text="MATRIZ" textFill="WHITE" />
+                                </children>
+                            </HBox>
                         </top>
-                     </BorderPane>
-                  </bottom>
-                  <top>
-                     <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="section-title" BorderPane.alignment="CENTER">
-                        <children>
-                           <Label fx:id="matlist" depthTest="DISABLE" text="MATRIZ" textFill="WHITE" />
-                        </children>
-                     </HBox>
-                  </top>
-               </BorderPane>
-            </children>
-         </VBox>
+                    </BorderPane>
+                </children>
+            </VBox>
         </HBox>
     </center>
-   <bottom>
+    <bottom>
         <ToolBar prefHeight="29.0" prefWidth="1200.0" styleClass="toolbar-background" BorderPane.alignment="CENTER">
             <TextField fx:id="fileNameField" promptText="Enter filename" />
-         <ChoiceBox fx:id="select" prefWidth="150.0" />
+            <ChoiceBox fx:id="select" prefWidth="150.0" >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Matriz" />
+                        <String fx:value="Lista" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
             <Button onAction="#onHelloButtonClick" text="Carregar Grafo" />
-         <Button onAction="#onHelloButtonClick" text="Converter" />
+            <Button fx:id="convertButton" text="Converter" onAction="#onConvertButtonClick" />
             <Button onAction="#onClearButtonClick" text="Resetar" />
         </ToolBar>
-   </bottom>
+    </bottom>
 </BorderPane>

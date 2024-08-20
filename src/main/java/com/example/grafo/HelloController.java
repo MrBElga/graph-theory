@@ -1,10 +1,13 @@
 package com.example.grafo;
 
 import com.example.grafo.graficos.GraphVisualization;
+import com.example.grafo.graficos.ListaVisualization;
 import com.example.grafo.graficos.MatrizVisualization;
 import com.example.grafo.lista.Lista;
 import com.example.grafo.matriz.Matriz;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -30,50 +33,23 @@ public class HelloController {
     @FXML
     private StackPane graphPane2;
 
-    private static String[] rotulos;
+    @FXML
+    private ChoiceBox<String> select;
+
+    @FXML
+    private Button convertButton;
+
+    private static Lista[] listaAdjacencia;
+    public static String[] rotulos;
     private static int[][] matrizAdjacencia;
     private String nomeArquivo = null;
+    private boolean isMatriz = true; // Controla o formato atual
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
         nomeArquivo = fileNameField.getText();
-
         leitor(nomeArquivo);
-
-        // Exibir o grafo
-        if (graphPane != null) {
-            graphPane.getChildren().clear();
-            GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
-            graphPane.getChildren().add(visualizacaoGrafo);
-        }
-
-        // Exibir a matriz
-        if (graphPane1 != null) {
-            graphPane1.getChildren().clear();
-            MatrizVisualization visualizacaoMatriz = new MatrizVisualization(matrizAdjacencia, rotulos);
-            graphPane1.getChildren().add(visualizacaoMatriz);
-            graphPane1.setStyle(" -fx-padding: 10;-fx-alignment: center-left; -fx-background-color: #363636");
-        }
-
-        // Exibir a análise
-        if (graphPane2 != null) {
-            graphPane2.getChildren().clear();
-
-            StringBuilder analise = new StringBuilder();
-            analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Simples: ").append(Matriz.grafoSimples(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Regular: ").append(Matriz.grafoRegular(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-            analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-
-            Text analiseText = new Text(analise.toString());
-            analiseText.setFont(new Font("Arial", 14));
-            String hexColor = "#ACACAC";
-            Color color = Color.web(hexColor);
-            analiseText.setFill(color);
-
-            graphPane2.getChildren().add(analiseText);
-            graphPane2.setStyle(" -fx-padding: 10;-fx-alignment: center-left; -fx-background-color: #363636");
-        }
+        updateDisplay();
     }
 
     @FXML
@@ -85,6 +61,83 @@ public class HelloController {
         if (graphPane2 != null)
             graphPane2.getChildren().clear();
         nomeArquivo = null;
+        listaAdjacencia = null;
+        matrizAdjacencia = null;
+        isMatriz = true; // Reseta o formato para matriz após limpar
+    }
+
+    @FXML
+    protected void onConvertButtonClick() {
+        if (isMatriz) {
+            // Converter matriz para lista
+            listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
+            isMatriz = false;
+        } else {
+            // Converter lista para matriz
+            matrizAdjacencia = Matriz.listaParaMatriz(listaAdjacencia, rotulos);
+            isMatriz = true;
+        }
+        updateDisplay();
+    }
+
+    private void updateDisplay() {
+        String escolha = select.getValue();
+        if ("Matriz".equals(escolha)) {
+            if (graphPane != null) {
+                graphPane.getChildren().clear();
+                GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
+                graphPane.getChildren().add(visualizacaoGrafo);
+            }
+            if (graphPane1 != null) {
+                graphPane1.getChildren().clear();
+                MatrizVisualization visualizacaoMatriz = new MatrizVisualization(matrizAdjacencia, rotulos);
+                graphPane1.getChildren().add(visualizacaoMatriz);
+                graphPane1.setStyle("-fx-padding: 10; -fx-alignment: center-left; -fx-background-color: #363636; -fx-border-color: WHITE");
+            }
+            if (graphPane2 != null) {
+                graphPane2.getChildren().clear();
+
+                StringBuilder analise = new StringBuilder();
+                analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Simples: ").append(Matriz.grafoSimples(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Regular: ").append(Matriz.grafoRegular(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
+
+                Text analiseText = new Text(analise.toString());
+                analiseText.setFont(new Font("Arial", 14));
+                analiseText.setFill(Color.web("#ACACAC"));
+
+                graphPane2.getChildren().add(analiseText);
+                graphPane2.setStyle("-fx-padding: 10; -fx-alignment: center-left; -fx-background-color: #363636; -fx-border-color: WHITE");
+            }
+        } else if ("Lista".equals(escolha)) {
+            if (graphPane != null) {
+                graphPane.getChildren().clear();
+                GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
+                graphPane.getChildren().add(visualizacaoGrafo);
+            }
+            if (graphPane1 != null) {
+                graphPane1.getChildren().clear();
+                ListaVisualization visualizacaoLista = new ListaVisualization(listaAdjacencia, rotulos);
+                graphPane1.getChildren().add(visualizacaoLista);
+                graphPane1.setStyle("-fx-padding: 10; -fx-alignment: center-left; -fx-background-color: #363636; -fx-border-color: WHITE");
+            }
+            if (graphPane2 != null) {
+                graphPane2.getChildren().clear();
+                StringBuilder analise = new StringBuilder();
+                //analise.append("Grafo Orientado: ").append(Lista.grafoOrientado(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                //analise.append("Grafo Simples: ").append(Lista.grafoSimples(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                //analise.append("Grafo Regular: ").append(Lista.grafoRegular(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                //analise.append("Grafo Completo: ").append(Lista.grafoCompleto(listaAdjacencia) ? "Sim" : "Não").append("\n");
+
+                Text analiseText = new Text(analise.toString());
+                analiseText.setFont(new Font("Arial", 14));
+                analiseText.setFill(Color.web("#ACACAC"));
+
+                graphPane2.getChildren().add(analiseText);
+                graphPane2.setStyle("-fx-padding: 10; -fx-alignment: center-left; -fx-background-color: #363636; -fx-border-color: WHITE");
+            }
+        }
     }
 
     public static void leitor(String nome) {
@@ -103,9 +156,8 @@ public class HelloController {
                 rotulos = linha.split(",");
                 int tamanho = rotulos.length;
 
-
                 matrizAdjacencia = new int[tamanho][tamanho];
-                Lista[] listaAdjacencia = new Lista[tamanho];
+                listaAdjacencia = new Lista[tamanho];
 
                 for (int i = 0; i < tamanho; i++) {
                     listaAdjacencia[i] = new Lista();
@@ -123,16 +175,14 @@ public class HelloController {
                     }
                     i++;
                 }
-
-                // Exibir a lista de adjacência
-                for (int k = 0; k < tamanho; k++) {
-                    System.out.println("Vértice " + rotulos[k] + ": ");
-                    listaAdjacencia[k].exibirLista();
-                }
             }
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
     }
 
+    @FXML
+    public void initialize() {
+        select.setValue("Matriz"); // Define "Matriz" como o valor padrão
+    }
 }
