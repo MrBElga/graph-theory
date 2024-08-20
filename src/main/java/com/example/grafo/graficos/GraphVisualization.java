@@ -32,10 +32,16 @@ public class GraphVisualization extends Pane {
         Canvas canvas = new Canvas(paneWidth, paneHeight);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+        // Preenchimento de fundo
         String hexColor = "#363636";
         Color color = Color.web(hexColor);
         gc.setFill(color);
         gc.fillRect(0, 0, paneWidth, paneHeight);
+
+        // Desenho da borda branca
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(5);  // Largura da borda
+        gc.strokeRect(0, 0, paneWidth, paneHeight);
 
         int nodeCount = labels.length;
 
@@ -70,7 +76,6 @@ public class GraphVisualization extends Pane {
             hexColor = "#ACACAC";
             color = Color.web(hexColor);
             gc.setFill(color);
-
         }
 
         // Desenhar arestas
