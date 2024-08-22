@@ -142,8 +142,10 @@ public class HelloController {
 
     public static void leitor(String nome) {
         Matriz matriz = new Matriz();
+        Lista lista = new Lista();
         lerArquivo(nome);
         matriz.analisarGrafo(matrizAdjacencia);
+        lista.analisarGrafoL(matrizAdjacencia);
     }
 
     private static void lerArquivo(String nome) {
