@@ -93,4 +93,46 @@ public class Matriz {
         return -1;
     }
 
+    public static boolean grafoRegularDeEmissao(int[][] matrizAdjacencia) {
+        int n = matrizAdjacencia.length;
+        int[] grauSaida = new int[n];
+        int[] grauEntrada = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grauSaida[i] += matrizAdjacencia[i][j];
+                grauEntrada[j] += matrizAdjacencia[i][j];
+            }
+        }
+
+        int grauSaidaEsperado = grauSaida[0];
+        int grauEntradaEsperado = grauEntrada[0];
+
+        for (int i = 1; i < n; i++) {
+            if (grauSaida[i] != grauSaidaEsperado || grauEntrada[i] != grauEntradaEsperado) {
+                return false; // Não é regular de emissão
+            }
+        }
+        return true; // É regular de emissão
+    }
+
+    public static boolean grafoRegularDeTransmissao(int[][] matrizAdjacencia) {
+        int n = matrizAdjacencia.length;
+        int[] grauSaida = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grauSaida[i] += matrizAdjacencia[i][j];
+            }
+        }
+        int grauSaidaEsperado = grauSaida[0];
+        for (int i = 1; i < n; i++) {
+            if (grauSaida[i] != grauSaidaEsperado) {
+                return false; // Não é regular de transmissão
+            }
+        }
+        return true; // É regular de transmissão
+    }
+
+
 }

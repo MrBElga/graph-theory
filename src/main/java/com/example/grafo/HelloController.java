@@ -48,8 +48,14 @@ public class HelloController {
     @FXML
     protected void onHelloButtonClick() throws IOException {
         nomeArquivo = fileNameField.getText();
-        leitor(nomeArquivo);
-        updateDisplay();
+        String escolha = select.getValue();
+        if("Matriz".equals(escolha)) {
+            leitor(nomeArquivo,true);
+            updateDisplay();
+        }else{
+            leitor(nomeArquivo,false);
+            updateDisplay();
+        }
     }
 
     @FXML
@@ -98,11 +104,28 @@ public class HelloController {
                 graphPane2.getChildren().clear();
 
                 StringBuilder analise = new StringBuilder();
+                System.out.println("-------------matriz-----------------");
                 analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 analise.append("Grafo Simples: ").append(Matriz.grafoSimples(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 analise.append("Grafo Regular: ").append(Matriz.grafoRegular(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
 
+                if(Matriz.grafoOrientado(matrizAdjacencia)){
+                    boolean regularDeEmissao = Matriz.grafoRegularDeEmissao(matrizAdjacencia);
+                    boolean regularDeTransmissao = Matriz.grafoRegularDeTransmissao(matrizAdjacencia);
+                    if(regularDeEmissao && regularDeTransmissao){
+                        System.out.println("O grafo é regular de emissão e transmissão.");
+                    }
+                    else if (regularDeEmissao) {
+                        System.out.println("O grafo é regular de emissão.");
+                    } else if (regularDeTransmissao) {
+                        System.out.println("O grafo é regular de transmissão.");
+                    } else {
+                        System.out.println("O grafo não é regular de emissão nem de transmissão.");
+                    }
+
+                }
+                System.out.println("-----------------------------------");
                 Text analiseText = new Text(analise.toString());
                 analiseText.setFont(new Font("Arial", 14));
                 analiseText.setFill(Color.web("#ACACAC"));
@@ -140,13 +163,20 @@ public class HelloController {
         }
     }
 
-    public static void leitor(String nome) {
-        Matriz matriz = new Matriz();
-        Lista lista = new Lista();
-        lerArquivo(nome);
-        matriz.analisarGrafo(matrizAdjacencia);
-        lista.analisarGrafoL(matrizAdjacencia);
+    //para matriz
+    public static void leitor(String nome, boolean isMatriz) {
+        if(isMatriz){
+            Matriz matriz = new Matriz();
+            lerArquivo(nome);
+            matriz.analisarGrafo(matrizAdjacencia);
+        }else{
+            Lista lista = new Lista();
+            lerArquivo(nome);
+            lista.analisarGrafoL(matrizAdjacencia);
+        }
+
     }
+
 
     private static void lerArquivo(String nome) {
         String caminhoArquivo = Paths.get("src/main/java/com/example/grafo/arquivosTxt", nome + ".txt").toString();
