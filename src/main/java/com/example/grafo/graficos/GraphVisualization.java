@@ -113,7 +113,6 @@ public class GraphVisualization extends Pane {
         } else if (listaAdj != null) {
             gc.setStroke(Color.WHITE);
             gc.setLineWidth(2);
-
             // Iterar sobre cada nó
             for (int i = 0; i < nodeCount; i++) {
                 // Obter a lista de vizinhos do nó atual
@@ -123,23 +122,22 @@ public class GraphVisualization extends Pane {
                 while (atual != null) {
                     int vizinho = findIndex(labels, atual.getAresta()); // Encontre o índice do vizinho
 
-                    if (i < vizinho) { // Evitar desenhar a mesma aresta duas vezes
-                        double x1 = positions[i][0];
-                        double y1 = positions[i][1];
-                        double x2 = positions[vizinho][0];
-                        double y2 = positions[vizinho][1];
+                    double x1 = positions[i][0];
+                    double y1 = positions[i][1];
+                    double x2 = positions[vizinho][0];
+                    double y2 = positions[vizinho][1];
 
-                        double dx = x2 - x1;
-                        double dy = y2 - y1;
-                        double length = Math.sqrt(dx * dx + dy * dy);
-                        double offset = 15;
-                        double sx1 = x1 + offset * (dx / length);
-                        double sy1 = y1 + offset * (dy / length);
-                        double sx2 = x2 - offset * (dx / length);
-                        double sy2 = y2 - offset * (dy / length);
+                    double dx = x2 - x1;
+                    double dy = y2 - y1;
+                    double length = Math.sqrt(dx * dx + dy * dy);
+                    double offset = 15;
+                    double sx1 = x1 + offset * (dx / length);
+                    double sy1 = y1 + offset * (dy / length);
+                    double sx2 = x2 - offset * (dx / length);
+                    double sy2 = y2 - offset * (dy / length);
 
-                        gc.strokeLine(sx1, sy1, sx2, sy2);
-                    }
+                    gc.strokeLine(sx1, sy1, sx2, sy2);
+
 
                     atual = atual.getProx(); // Avançar para o próximo vizinho
                 }

@@ -45,7 +45,7 @@ public class Matriz {
                 grauAtual += matrizAdjacencia[i][j];
             if (grau == -1)
                 grau = grauAtual;
-             else if (grau != grauAtual)
+            else if (grau != grauAtual)
                 return false; // Não é regular se houver diferentes graus
         }
         return true; // É regular

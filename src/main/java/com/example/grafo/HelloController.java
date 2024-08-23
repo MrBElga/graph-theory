@@ -147,7 +147,6 @@ public class HelloController {
         } else if ("Lista".equals(escolha)) {
             if (graphPane != null) {
                 graphPane.getChildren().clear();
-                //ARRUMAR
                 GraphVisualization visualizacaoGrafo = new GraphVisualization(null, rotulos,listaAdjacencia);
                 graphPane.getChildren().add(visualizacaoGrafo);
             }
@@ -161,10 +160,10 @@ public class HelloController {
                 graphPane2.getChildren().clear();
                 StringBuilder analise = new StringBuilder();
                 //ARRUMAR
-                //analise.append("Grafo Orientado: ").append(Lista.grafoOrientado(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
-                //analise.append("Grafo Simples: ").append(Lista.grafoSimples(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
-                //analise.append("Grafo Regular: ").append(Lista.grafoRegular(listaAdjacencia) ? "Sim" : "Não").append("\n");
-                //analise.append("Grafo Completo: ").append(Lista.grafoCompleto(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Orientado: ").append(Lista.grafoOrientado(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Simples: ").append(Lista.grafoSimples(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Regular: ").append(Lista.grafoRegular(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                analise.append("Grafo Completo: ").append(Lista.grafoCompleto(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
 
                 Text analiseText = new Text(analise.toString());
                 analiseText.setFont(new Font("Arial", 14));
