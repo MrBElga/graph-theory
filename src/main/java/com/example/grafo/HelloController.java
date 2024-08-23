@@ -69,7 +69,6 @@ public class HelloController {
         nomeArquivo = null;
         listaAdjacencia = null;
         matrizAdjacencia = null;
-        isMatriz = true; // Reseta o formato para matriz após limpar
     }
 
     @FXML
@@ -104,27 +103,29 @@ public class HelloController {
                 graphPane2.getChildren().clear();
 
                 StringBuilder analise = new StringBuilder();
-                System.out.println("-------------matriz-----------------");
+
                 analise.append("Grafo Orientado: ").append(Matriz.grafoOrientado(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 analise.append("Grafo Simples: ").append(Matriz.grafoSimples(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 analise.append("Grafo Regular: ").append(Matriz.grafoRegular(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-                analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-
                 if(Matriz.grafoOrientado(matrizAdjacencia)){
                     boolean regularDeEmissao = Matriz.grafoRegularDeEmissao(matrizAdjacencia);
                     boolean regularDeTransmissao = Matriz.grafoRegularDeTransmissao(matrizAdjacencia);
                     if(regularDeEmissao && regularDeTransmissao){
+                        analise.append("└──regular de emissão e transmissão").append("\n");
                         System.out.println("O grafo é regular de emissão e transmissão.");
                     }
                     else if (regularDeEmissao) {
+                        analise.append("└──regular de emissão").append("\n");
                         System.out.println("O grafo é regular de emissão.");
                     } else if (regularDeTransmissao) {
+                        analise.append("└──regular de transmissão").append("\n");
                         System.out.println("O grafo é regular de transmissão.");
                     } else {
+                        analise.append("└──não regular de emissão nem de transmissão").append("\n");
                         System.out.println("O grafo não é regular de emissão nem de transmissão.");
                     }
-
                 }
+                analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
                 System.out.println("-----------------------------------");
                 Text analiseText = new Text(analise.toString());
                 analiseText.setFont(new Font("Arial", 14));
@@ -136,6 +137,7 @@ public class HelloController {
         } else if ("Lista".equals(escolha)) {
             if (graphPane != null) {
                 graphPane.getChildren().clear();
+                //ARRUMAR
                 GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
                 graphPane.getChildren().add(visualizacaoGrafo);
             }
@@ -148,10 +150,11 @@ public class HelloController {
             if (graphPane2 != null) {
                 graphPane2.getChildren().clear();
                 StringBuilder analise = new StringBuilder();
-                //analise.append("Grafo Orientado: ").append(Lista.grafoOrientado(listaAdjacencia) ? "Sim" : "Não").append("\n");
-                //analise.append("Grafo Simples: ").append(Lista.grafoSimples(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                //ARRUMAR
+                //analise.append("Grafo Orientado: ").append(Lista.grafoOrientado(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
+                //analise.append("Grafo Simples: ").append(Lista.grafoSimples(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
                 //analise.append("Grafo Regular: ").append(Lista.grafoRegular(listaAdjacencia) ? "Sim" : "Não").append("\n");
-                //analise.append("Grafo Completo: ").append(Lista.grafoCompleto(listaAdjacencia) ? "Sim" : "Não").append("\n");
+                //analise.append("Grafo Completo: ").append(Lista.grafoCompleto(listaAdjacencia,rotulos) ? "Sim" : "Não").append("\n");
 
                 Text analiseText = new Text(analise.toString());
                 analiseText.setFont(new Font("Arial", 14));
