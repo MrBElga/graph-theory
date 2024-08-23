@@ -12,7 +12,7 @@ public class Matriz {
         boolean simples = grafoSimples(matrizAdjacencia);
         boolean regular = grafoRegular(matrizAdjacencia);
         boolean completo = grafoCompleto(matrizAdjacencia);
-
+        System.out.println("---------Matriz-------------");
         System.out.println("Grafo Orientado: " + orientado);
         System.out.println("Grafo Simples: " + simples);
         System.out.println("Grafo Regular: " + regular);

@@ -58,7 +58,7 @@ public class Lista {
         System.out.println("---------------------------");
     }
 
-    private static int findIndex(String[] rotulos, String rotulo) {
+    public static int findIndex(String[] rotulos, String rotulo) {
         for (int i = 0; i < rotulos.length; i++) {
             if (rotulos[i].equals(rotulo)) {
                 return i;

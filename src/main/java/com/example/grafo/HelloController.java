@@ -100,7 +100,7 @@ public class HelloController {
         if ("Matriz".equals(escolha)) {
             if (graphPane != null) {
                 graphPane.getChildren().clear();
-                GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
+                GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos,null);
                 graphPane.getChildren().add(visualizacaoGrafo);
             }
             if (graphPane1 != null) {
@@ -136,7 +136,7 @@ public class HelloController {
                     }
                 }
                 analise.append("Grafo Completo: ").append(Matriz.grafoCompleto(matrizAdjacencia) ? "Sim" : "Não").append("\n");
-                System.out.println("-----------------------------------");
+                System.out.println("---------------------------");
                 Text analiseText = new Text(analise.toString());
                 analiseText.setFont(new Font("Arial", 14));
                 analiseText.setFill(Color.web("#ACACAC"));
@@ -148,7 +148,7 @@ public class HelloController {
             if (graphPane != null) {
                 graphPane.getChildren().clear();
                 //ARRUMAR
-                GraphVisualization visualizacaoGrafo = new GraphVisualization(matrizAdjacencia, rotulos);
+                GraphVisualization visualizacaoGrafo = new GraphVisualization(null, rotulos,listaAdjacencia);
                 graphPane.getChildren().add(visualizacaoGrafo);
             }
             if (graphPane1 != null) {
