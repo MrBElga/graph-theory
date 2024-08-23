@@ -74,7 +74,7 @@ public class Matriz {
         int n = lista.length;
         int[][] matriz = new int[n][n];
         for (int i = 0; i < n; i++) {
-            com.example.grafo.lista.No atual = lista[i].getInicio();
+            No atual = lista[i].getInicio();
             while (atual != null) {
                 int j = findIndex(rotulos, atual.getAresta());
                 matriz[i][j] = atual.getCusto();

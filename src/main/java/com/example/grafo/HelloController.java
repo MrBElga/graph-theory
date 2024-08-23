@@ -75,15 +75,19 @@ public class HelloController {
     protected void onConvertButtonClick() {
         if (isMatriz) {
             // Converter matriz para lista
+            Matriz matriz = new Matriz();
             listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
             isMatriz = false;
             select.setValue("Lista");
+            matriz.analisarGrafo(matrizAdjacencia);
 
         } else {
             // Converter lista para matriz
+            Lista lista = new Lista();
             matrizAdjacencia = Matriz.listaParaMatriz(listaAdjacencia, rotulos);
             isMatriz = true;
             select.setValue("Matriz");
+            lista.analisarGrafoL(matrizAdjacencia);
         }
         graphPane.getChildren().clear();
         graphPane1.getChildren().clear();
