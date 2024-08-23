@@ -41,8 +41,10 @@ public class Matriz {
         int grau = -1;
         for (int i = 0; i < tamanho; i++) {
             int grauAtual = 0;
-            for (int j = 0; j < tamanho; j++)
-                grauAtual += matrizAdjacencia[i][j];
+            for (int j = 0; j < tamanho; j++) {
+                if (matrizAdjacencia[i][j]>0)
+                    grauAtual++;
+            }
             if (grau == -1)
                 grau = grauAtual;
             else if (grau != grauAtual)
@@ -60,7 +62,7 @@ public class Matriz {
                         return false;
                     }
                 } else {
-                    if (matrizAdjacencia[i][j] != 1) { // Os outros elementos devem ser 1
+                    if (matrizAdjacencia[i][j] < 1) { // Os outros elementos devem ser maior 1
                         return false;
                     }
                 }
