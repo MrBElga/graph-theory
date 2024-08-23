@@ -42,8 +42,8 @@ public class Lista {
         return inicio;
     }
 
-    public void analisarGrafoL(int[][] matrizAdjacencia) {
-        Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
+    public void analisarGrafoL(Lista [] listaAdjacencia) {
+        //Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
 
         boolean orientado = grafoOrientado(listaAdjacencia, rotulos);
         boolean simples = grafoSimples(listaAdjacencia, rotulos);

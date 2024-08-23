@@ -75,19 +75,19 @@ public class HelloController {
     protected void onConvertButtonClick() {
         if (isMatriz) {
             // Converter matriz para lista
-            Matriz matriz = new Matriz();
+            Lista lista = new Lista();
             listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
             isMatriz = false;
             select.setValue("Lista");
-            matriz.analisarGrafo(matrizAdjacencia);
+            lista.analisarGrafoL(listaAdjacencia);
 
         } else {
             // Converter lista para matriz
-            Lista lista = new Lista();
+            Matriz matriz = new Matriz();
             matrizAdjacencia = Matriz.listaParaMatriz(listaAdjacencia, rotulos);
             isMatriz = true;
             select.setValue("Matriz");
-            lista.analisarGrafoL(matrizAdjacencia);
+            matriz.analisarGrafo(matrizAdjacencia);
         }
         graphPane.getChildren().clear();
         graphPane1.getChildren().clear();
@@ -185,7 +185,7 @@ public class HelloController {
         }else{
             Lista lista = new Lista();
             lerArquivo(nome);
-            lista.analisarGrafoL(matrizAdjacencia);
+            lista.analisarGrafoL(listaAdjacencia);
         }
 
     }
@@ -214,7 +214,7 @@ public class HelloController {
                     for (int j = 0; j < valores.length; j++) {
                         matrizAdjacencia[i][j] = Integer.parseInt(valores[j]);
                         if (matrizAdjacencia[i][j] != 0) {
-                            String aresta = rotulos[i] + " -> " + rotulos[j];
+                            String aresta = rotulos[j];
                             listaAdjacencia[i].inserirFim(aresta, matrizAdjacencia[i][j]);
                         }
                     }
