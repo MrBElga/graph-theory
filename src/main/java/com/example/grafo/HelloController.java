@@ -77,11 +77,17 @@ public class HelloController {
             // Converter matriz para lista
             listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
             isMatriz = false;
+            select.setValue("Lista");
+
         } else {
             // Converter lista para matriz
             matrizAdjacencia = Matriz.listaParaMatriz(listaAdjacencia, rotulos);
             isMatriz = true;
+            select.setValue("Matriz");
         }
+        graphPane.getChildren().clear();
+        graphPane1.getChildren().clear();
+        graphPane2.getChildren().clear();
         updateDisplay();
     }
 

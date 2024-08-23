@@ -76,9 +76,10 @@ public class Matriz {
         for (int i = 0; i < n; i++) {
             com.example.grafo.lista.No atual = lista[i].getInicio();
             while (atual != null) {
-                int j = findIndex(rotulos, atual.getAresta().split(" -> ")[1]);
+                int j = findIndex(rotulos, atual.getAresta());
                 matriz[i][j] = atual.getCusto();
                 atual = atual.getProx();
+
             }
         }
         return matriz;
