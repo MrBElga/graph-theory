@@ -22,7 +22,7 @@ Esta pasta contém a implementação de um grafo usando duas abordagens diferent
    - Verificação se o grafo é completo.
 
 
-### 2. [Rede Social](./SocialMediaGrafo)
+### 2. [Rede Social](./socialMidiaGrafo/SocialGrafo)
 Esta pasta contém a implementação de um problema específico que envolve uma rede social. O grafo da rede social é representado utilizando listas de adjacência.
 
 #### Funcionalidades Implementadas:
