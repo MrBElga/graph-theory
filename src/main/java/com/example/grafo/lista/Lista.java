@@ -42,8 +42,8 @@ public class Lista {
         return inicio;
     }
 
-    public void analisarGrafoL(int[][] matrizAdjacencia) {
-        Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
+    public void analisarGrafoL(Lista [] listaAdjacencia) {
+        //Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
 
         boolean orientado = grafoOrientado(listaAdjacencia, rotulos);
         boolean simples = grafoSimples(listaAdjacencia, rotulos);
@@ -58,7 +58,7 @@ public class Lista {
         System.out.println("---------------------------");
     }
 
-    private static int findIndex(String[] rotulos, String rotulo) {
+    public static int findIndex(String[] rotulos, String rotulo) {
         for (int i = 0; i < rotulos.length; i++) {
             if (rotulos[i].equals(rotulo)) {
                 return i;

@@ -12,7 +12,7 @@ public class Matriz {
         boolean simples = grafoSimples(matrizAdjacencia);
         boolean regular = grafoRegular(matrizAdjacencia);
         boolean completo = grafoCompleto(matrizAdjacencia);
-
+        System.out.println("---------Matriz-------------");
         System.out.println("Grafo Orientado: " + orientado);
         System.out.println("Grafo Simples: " + simples);
         System.out.println("Grafo Regular: " + regular);
@@ -41,11 +41,13 @@ public class Matriz {
         int grau = -1;
         for (int i = 0; i < tamanho; i++) {
             int grauAtual = 0;
-            for (int j = 0; j < tamanho; j++)
-                grauAtual += matrizAdjacencia[i][j];
+            for (int j = 0; j < tamanho; j++) {
+                if (matrizAdjacencia[i][j]>0)
+                    grauAtual++;
+            }
             if (grau == -1)
                 grau = grauAtual;
-             else if (grau != grauAtual)
+            else if (grau != grauAtual)
                 return false; // Não é regular se houver diferentes graus
         }
         return true; // É regular
@@ -60,7 +62,7 @@ public class Matriz {
                         return false;
                     }
                 } else {
-                    if (matrizAdjacencia[i][j] != 1) { // Os outros elementos devem ser 1
+                    if (matrizAdjacencia[i][j] < 1) { // Os outros elementos devem ser maior 1
                         return false;
                     }
                 }
@@ -74,11 +76,12 @@ public class Matriz {
         int n = lista.length;
         int[][] matriz = new int[n][n];
         for (int i = 0; i < n; i++) {
-            com.example.grafo.lista.No atual = lista[i].getInicio();
+            No atual = lista[i].getInicio();
             while (atual != null) {
-                int j = findIndex(rotulos, atual.getAresta().split(" -> ")[1]);
+                int j = findIndex(rotulos, atual.getAresta());
                 matriz[i][j] = atual.getCusto();
                 atual = atual.getProx();
+
             }
         }
         return matriz;
@@ -92,5 +95,47 @@ public class Matriz {
         }
         return -1;
     }
+
+    public static boolean grafoRegularDeEmissao(int[][] matrizAdjacencia) {
+        int n = matrizAdjacencia.length;
+        int[] grauSaida = new int[n];
+        int[] grauEntrada = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grauSaida[i] += matrizAdjacencia[i][j];
+                grauEntrada[j] += matrizAdjacencia[i][j];
+            }
+        }
+
+        int grauSaidaEsperado = grauSaida[0];
+        int grauEntradaEsperado = grauEntrada[0];
+
+        for (int i = 1; i < n; i++) {
+            if (grauSaida[i] != grauSaidaEsperado || grauEntrada[i] != grauEntradaEsperado) {
+                return false; // Não é regular de emissão
+            }
+        }
+        return true; // É regular de emissão
+    }
+
+    public static boolean grafoRegularDeTransmissao(int[][] matrizAdjacencia) {
+        int n = matrizAdjacencia.length;
+        int[] grauSaida = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grauSaida[i] += matrizAdjacencia[i][j];
+            }
+        }
+        int grauSaidaEsperado = grauSaida[0];
+        for (int i = 1; i < n; i++) {
+            if (grauSaida[i] != grauSaidaEsperado) {
+                return false; // Não é regular de transmissão
+            }
+        }
+        return true; // É regular de transmissão
+    }
+
 
 }
