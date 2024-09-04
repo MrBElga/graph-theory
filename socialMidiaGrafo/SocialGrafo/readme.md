@@ -10,5 +10,6 @@ Este repositório contém uma implementação que, a partir de um grafo, determi
 ## Narrativa do problema
 Identificação de influenciadores: Em um grafo que representa uma rede social, onde os vértices são pessoas e as arestas representam interações, os pontos de articulação podem indicar pessoas cuja remoção pode isolar partes significativas da rede, potencialmente influenciadores ou líderes de opinião.
 
-## Narrativa do problema
- - java
+## Tecnologia 
+  - java
+
