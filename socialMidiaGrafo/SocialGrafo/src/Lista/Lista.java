@@ -1,9 +1,9 @@
-package com.example.socialgrafo.Lista;
+package Lista;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.example.socialgrafo.HelloController.rotulos;
+
 
 
 public class Lista {
@@ -43,7 +43,7 @@ public class Lista {
         return inicio;
     }
 
-    public void analisarGrafoL(Lista [] listaAdjacencia) {
+    public void analisarGrafoL(Lista [] listaAdjacencia, String[] rotulos) {
         //Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
 
         boolean orientado = grafoOrientado(listaAdjacencia, rotulos);

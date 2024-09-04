@@ -1,4 +1,4 @@
-package com.example.socialgrafo.Lista;
+package Lista;
 
 public class No {
     public String Aresta;

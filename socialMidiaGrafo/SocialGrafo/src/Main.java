@@ -1,37 +1,28 @@
-package com.example.socialgrafo;
-
-import com.example.socialgrafo.Lista.Lista;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import Lista.Lista;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Paths;
 
-public class HelloController {
+public class Main  {
+
     private static Lista[] listaAdjacencia;
     public static String[] rotulos;
 
-    private String nomeArquivo = null;
-    private boolean isMatriz = true; // Controla o formato atual
-    @FXML
-    private Label welcomeText;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-       lerArquivo("mat0");
+    public static void main(String[] args) {
+        System.out.println("Welcome to JavaFX Application!");
+        lerArquivo("mat0");
         if (listaAdjacencia != null && rotulos != null) {
             Lista lista = new Lista();
             lista.encontrarPontosDeArticulacao(listaAdjacencia, rotulos);
         } else {
-            welcomeText.setText("Lista de adjacência ou rótulos não carregados.");
+            System.out.println("Lista de adjacência ou rótulos não carregados.");
         }
     }
 
     private static void lerArquivo(String nome) {
-        String caminhoArquivo ="src/main/java/com/example/socialgrafo/Matriz/mat0.txt";
+        String caminhoArquivo ="src/Matriz/mat0.txt";
         System.out.println("Carregando arquivo: " + caminhoArquivo);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
