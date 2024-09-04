@@ -3,9 +3,6 @@ package Lista;
 import java.util.Arrays;
 import java.util.Objects;
 
-
-
-
 public class Lista {
     private No inicio;
 
@@ -160,6 +157,7 @@ public class Lista {
     }
 
     public void encontrarPontosDeArticulacao(Lista[] listaAdjacencia, String[] rotulos) {
+
         int n = listaAdjacencia.length;
         boolean[] visitado = new boolean[n];
         int[] tempoDescoberta = new int[n];  // Tempo de descoberta dos vértices
@@ -183,6 +181,7 @@ public class Lista {
     }
 
     private void encontrarArticulacaoUtil(int u, boolean[] visitado, int[] tempoDescoberta, int[] menorTempo, int[] pai, boolean[] pontoArticulacao, Lista[] listaAdjacencia, String[] rotulos) {
+        exibirLista();
         int tempo = 0;
         int filhos = 0;
         visitado[u] = true;

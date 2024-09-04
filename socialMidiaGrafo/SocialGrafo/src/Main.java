@@ -12,9 +12,16 @@ public class Main  {
 
     public static void main(String[] args) {
         System.out.println("Welcome to JavaFX Application!");
-        lerArquivo("mat0");
+        lerArquivo("mat1");
         if (listaAdjacencia != null && rotulos != null) {
-            Lista lista = new Lista();
+            Lista lista;
+            int i = 0;
+            lista = listaAdjacencia[i];
+            while (lista != null){
+                lista.exibirLista();
+                i++;
+                lista = listaAdjacencia[i];
+            }
             lista.encontrarPontosDeArticulacao(listaAdjacencia, rotulos);
         } else {
             System.out.println("Lista de adjacência ou rótulos não carregados.");
@@ -22,7 +29,7 @@ public class Main  {
     }
 
     private static void lerArquivo(String nome) {
-        String caminhoArquivo ="src/Matriz/mat0.txt";
+        String caminhoArquivo ="src/Matriz/mat1.txt";
         System.out.println("Carregando arquivo: " + caminhoArquivo);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
