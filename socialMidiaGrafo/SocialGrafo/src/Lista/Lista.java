@@ -1,7 +1,9 @@
 package Lista;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 public class Lista {
     private No inicio;
@@ -30,18 +32,25 @@ public class Lista {
 
     public void exibirLista() {
         No atual = inicio;
-        while (atual != null) {
-            System.out.println(atual.getAresta() + " -> " + atual.getCusto());
+        if (atual == null) {
+            System.out.println("Lista vazia");
+        }else{
+            System.out.print(atual.getAresta());
             atual = atual.getProx();
+            while (atual != null) {
+                System.out.print(" -> " + atual.getCusto() + " | " + atual.getAresta());
+                atual = atual.getProx();
+            }
+            System.out.println();
         }
     }
+
 
     public No getInicio() {
         return inicio;
     }
 
     public void analisarGrafoL(Lista [] listaAdjacencia, String[] rotulos) {
-        //Lista[] listaAdjacencia = Lista.matrizParaLista(matrizAdjacencia, rotulos);
 
         boolean orientado = grafoOrientado(listaAdjacencia, rotulos);
         boolean simples = grafoSimples(listaAdjacencia, rotulos);
@@ -64,8 +73,7 @@ public class Lista {
         }
         return -1; // Retorna -1 se o rótulo não for encontrado
     }
-
-
+    
     public static Lista[] matrizParaLista(int[][] matriz, String[] rotulos) {
         int n = matriz.length;
         Lista[] listaAdjacencia = new Lista[n];
@@ -156,61 +164,42 @@ public class Lista {
         return true; // O grafo é completo
     }
 
-    public void encontrarPontosDeArticulacao(Lista[] listaAdjacencia, String[] rotulos) {
+    public void bfs(Lista[] listaAdjacencia, String[] rotulos, String verticeInicial) {
+        boolean[] visitado = new boolean[rotulos.length];
+        Queue<String> fila = new LinkedList<>();
+        Lista arvoreGeradora = new Lista();  // Lista para armazenar a árvore geradora
+        int ordemVisita = 1;  // Contador para a ordem de visita
 
-        int n = listaAdjacencia.length;
-        boolean[] visitado = new boolean[n];
-        int[] tempoDescoberta = new int[n];  // Tempo de descoberta dos vértices
-        int[] menorTempo = new int[n];       // Menor tempo de descoberta acessível
-        int[] pai = new int[n];
-        boolean[] pontoArticulacao = new boolean[n];
-        Arrays.fill(pai, -1);
+        // Encontrar o índice do vértice inicial
+        int inicioIndex = Lista.findIndex(rotulos, verticeInicial);
 
-        for (int i = 0; i < n; i++) {
-            if (!visitado[i]) {
-                encontrarArticulacaoUtil(i, visitado, tempoDescoberta, menorTempo, pai, pontoArticulacao, listaAdjacencia, rotulos);
-            }
-        }
+        // Marcar o vértice inicial como visitado e adicionar à fila
+        visitado[inicioIndex] = true;
+        fila.add(verticeInicial);
 
-        System.out.println("Pontos de Articulação:");
-        for (int i = 0; i < n; i++) {
-            if (pontoArticulacao[i]) {
-                System.out.println(rotulos[i]);
-            }
-        }
-    }
+        // Adicionar o vértice inicial à árvore geradora com ordem 0 (inicial)
+        arvoreGeradora.inserirFim(verticeInicial, 0);
 
-    private void encontrarArticulacaoUtil(int u, boolean[] visitado, int[] tempoDescoberta, int[] menorTempo, int[] pai, boolean[] pontoArticulacao, Lista[] listaAdjacencia, String[] rotulos) {
-        exibirLista();
-        int tempo = 0;
-        int filhos = 0;
-        visitado[u] = true;
-        tempoDescoberta[u] = menorTempo[u] = ++tempo;
-        No atual = listaAdjacencia[u].getInicio();
+        // Executar a BFS
+        while (!fila.isEmpty()) {
+            String atual = fila.poll();  // Remove o primeiro da fila
+            int atualIndex = Lista.findIndex(rotulos, atual);
 
-        while (atual != null) {
-            int v = findIndex(rotulos, atual.getAresta());
-
-            if (!visitado[v]) {
-                filhos++;
-                pai[v] = u;
-                encontrarArticulacaoUtil(v, visitado, tempoDescoberta, menorTempo, pai, pontoArticulacao, listaAdjacencia, rotulos);
-
-                menorTempo[u] = Math.min(menorTempo[u], menorTempo[v]);
-
-                if (pai[u] == -1 && filhos > 1) {
-                    pontoArticulacao[u] = true;
+            No noAtual = listaAdjacencia[atualIndex].getInicio();
+            while (noAtual != null) {
+                int vizinhoIndex = Lista.findIndex(rotulos, noAtual.getAresta());
+                if (!visitado[vizinhoIndex]) {
+                    visitado[vizinhoIndex] = true;
+                    fila.add(noAtual.getAresta());
+                    // Adicionar o vértice à árvore geradora com a ordem de visita
+                    arvoreGeradora.inserirFim(noAtual.getAresta(), ordemVisita++);
                 }
-
-                if (pai[u] != -1 && menorTempo[v] >= tempoDescoberta[u]) {
-                    pontoArticulacao[u] = true;
-                }
-            } else if (v != pai[u]) {
-                menorTempo[u] = Math.min(menorTempo[u], tempoDescoberta[v]);
+                noAtual = noAtual.getProx();
             }
-
-            atual = atual.getProx();
         }
-    }
 
+        // Exibe a árvore geradora com a ordem de visita
+        System.out.println("Árvore geradora na ordem de visita:");
+        arvoreGeradora.exibirLista();
+    }
 }
