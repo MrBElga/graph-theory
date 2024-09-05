@@ -27,11 +27,11 @@ public class Lista {
         }
     }
 
-    public void exibirLista() {
+    public void exibirListap() {
         No atual = inicio;
         if (atual == null) {
             System.out.println("Lista vazia");
-        }else{
+        } else {
             System.out.print(atual.getAresta());
             atual = atual.getProx();
             while (atual != null) {
@@ -41,6 +41,22 @@ public class Lista {
             System.out.println();
         }
     }
+
+    public void exibirLista() {
+        No atual = inicio;
+        if (atual == null) {
+            System.out.println("Lista vazia");
+        } else {
+            System.out.println("========="+atual.getAresta()+"========");
+            atual = atual.getProx();
+            while (atual != null) {
+                System.out.println(" " + atual.getAresta());
+                atual = atual.getProx();
+            }
+            System.out.println("=======================");
+        }
+    }
+
 
     public No getInicio() {
         return inicio;
@@ -82,7 +98,7 @@ public class Lista {
         exibirArvoreDFSVisual(rotulos, pais);
 
         // Exibir pontos de articulação
-        System.out.println("Pontos de articulação:");
+        System.out.println("Influencers:");
         for (int i = 0; i < n; i++) {
             if (articulacao[i]) {
                 System.out.println(rotulos[i]);

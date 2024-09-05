@@ -16,13 +16,21 @@ public class Main {
         System.out.println("Digite o nome do arquivo (sem .txt no final): ");
         lerArquivo(sc.nextLine());
         if (listaAdjacencia != null && rotulos != null) {
-            // Exibe a lista de adjacência
-            System.out.println("Lista do grafo:");
+
+            // Exibe a lista de adjacência (graf)
+            System.out.println("Lista (grafo inicial):");
+            System.out.println("===========================");
             for (int i = 0; i < listaAdjacencia.length; i++) {
-                System.out.println("Vértice " + rotulos[i] + ":");
+
+                listaAdjacencia[i].exibirListap();
+            }
+            System.out.println("---------------------------");
+            // Exibe a lista de adjacência (graf)
+            System.out.println("Lista de Seguindo para cada usuario:");
+            for (int i = 0; i < listaAdjacencia.length; i++) {
+
                 listaAdjacencia[i].exibirLista();
             }
-
             // Executa a DFS para encontrar pontos de articulação
             Lista lista = new Lista();
             lista.buscarArticulacao(listaAdjacencia, rotulos);  // Chama a DFS e exibe os pontos de articulação
