@@ -45,24 +45,71 @@ public class Lista {
         }
     }
 
-
     public No getInicio() {
         return inicio;
     }
 
-    public void analisarGrafoL(Lista [] listaAdjacencia, String[] rotulos) {
+    // Busca em profundidade para construir árvore geradora e encontrar pontos de articulação
+    public void buscarArticulacao(Lista[] listaAdjacencia, String[] rotulos) {
+        int n = listaAdjacencia.length;
+        boolean[] visitado = new boolean[n];
+        int[] prenum = new int[n];  // Ordem de visita na DFS
+        int[] menor = new int[n];   // Valor de menor[v]
+        int[] pais = new int[n];    // Pai de cada vértice
+        boolean[] articulacao = new boolean[n]; // Se o vértice é articulação
+        int tempo = 0;
 
-        boolean orientado = grafoOrientado(listaAdjacencia, rotulos);
-        boolean simples = grafoSimples(listaAdjacencia, rotulos);
-        boolean regular = grafoRegular(listaAdjacencia);
-        boolean completo = grafoCompleto(listaAdjacencia, rotulos);
+        // Inicializa vetores
+        Arrays.fill(pais, -1);
+        Arrays.fill(visitado, false);
+        Arrays.fill(articulacao, false);
 
-        System.out.println("---------Lista-------------");
-        System.out.println("Grafo Orientado: " + orientado);
-        System.out.println("Grafo Simples: " + simples);
-        System.out.println("Grafo Regular: " + regular);
-        System.out.println("Grafo Completo: " + completo);
-        System.out.println("---------------------------");
+        // Função de busca em profundidade (DFS) recursiva
+        for (int i = 0; i < n; i++) {
+            if (!visitado[i]) {
+                dfs(listaAdjacencia, i, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
+            }
+        }
+
+        // Exibir pontos de articulação
+        System.out.println("Pontos de articulação:");
+        for (int i = 0; i < n; i++) {
+            if (articulacao[i]) {
+                System.out.println(rotulos[i]);
+            }
+        }
+    }
+
+    private void dfs(Lista[] listaAdjacencia, int v, boolean[] visitado, int[] prenum, int[] menor,
+                     int[] pais, boolean[] articulacao, int tempo, String[] rotulos) {
+        visitado[v] = true;
+        prenum[v] = menor[v] = ++tempo; // Definir tempo de visita
+        int filhos = 0;
+
+        No atual = listaAdjacencia[v].getInicio();
+        while (atual != null) {
+            int adj = findIndex(rotulos, atual.getAresta());
+            if (!visitado[adj]) {
+                filhos++;
+                pais[adj] = v;
+                dfs(listaAdjacencia, adj, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
+
+                // Atualiza o valor menor[v]
+                menor[v] = Math.min(menor[v], menor[adj]);
+
+                // Condições para identificar pontos de articulação
+                if (pais[v] == -1 && filhos > 1) {
+                    articulacao[v] = true; // A raiz é articulação se tiver mais de um filho
+                }
+                if (pais[v] != -1 && menor[adj] >= prenum[v]) {
+                    articulacao[v] = true; // Verifica a condição para vértices não raiz
+                }
+            } else if (adj != pais[v]) {
+                // Atualiza o valor menor[v] para o ancestral
+                menor[v] = Math.min(menor[v], prenum[adj]);
+            }
+            atual = atual.getProx();
+        }
     }
 
     public static int findIndex(String[] rotulos, String rotulo) {
@@ -71,135 +118,6 @@ public class Lista {
                 return i;
             }
         }
-        return -1; // Retorna -1 se o rótulo não for encontrado
-    }
-    
-    public static Lista[] matrizParaLista(int[][] matriz, String[] rotulos) {
-        int n = matriz.length;
-        Lista[] listaAdjacencia = new Lista[n];
-        for (int i = 0; i < n; i++) {
-            listaAdjacencia[i] = new Lista();
-            for (int j = 0; j < n; j++) {
-                if (matriz[i][j] != 0) {
-                    listaAdjacencia[i].inserirFim(rotulos[j], matriz[i][j]);
-                }
-            }
-        }
-        return listaAdjacencia;
-    }
-
-    public static boolean grafoOrientado(Lista[] listaAdjacencia, String[] rotulos) {
-        int n = listaAdjacencia.length;
-        for (int i = 0; i < n; i++) {
-            No atual = listaAdjacencia[i].getInicio();
-            while (atual != null) {
-                int j = findIndex(rotulos, atual.getAresta());
-                No adjacente = listaAdjacencia[j].getInicio();
-                boolean encontrouArestaReversa = false;
-                while (adjacente != null) {
-                    if (findIndex(rotulos, adjacente.getAresta()) == i) {
-                        encontrouArestaReversa = true;
-                        break;
-                    }
-                    adjacente = adjacente.getProx();
-                }
-                if (!encontrouArestaReversa) {
-                    return true; // O grafo é orientado se não houver aresta reversa
-                }
-                atual = atual.getProx();
-            }
-        }
-        return false; // O grafo não é orientado
-    }
-
-    public static boolean grafoSimples(Lista[] listaAdjacencia, String[] rotulos) {
-        int n = listaAdjacencia.length;
-        for (int i = 0; i < n; i++) {
-            No atual = listaAdjacencia[i].getInicio();
-            while (atual != null) {
-                if (findIndex(rotulos, atual.getAresta()) == i) {
-                    return false; // Grafo não é simples se houver laço
-                }
-                atual = atual.getProx();
-            }
-        }
-        return true; // O grafo é simples
-    }
-
-    public static boolean grafoRegular(Lista[] listaAdjacencia) {
-        int n = listaAdjacencia.length;
-        int grau = -1;
-        for (int i = 0; i < n; i++) {
-            int grauAtual = 0;
-            No atual = listaAdjacencia[i].getInicio();
-            while (atual != null) {
-                grauAtual++;
-                atual = atual.getProx();
-            }
-            if (grau == -1) {
-                grau = grauAtual;
-            } else if (grau != grauAtual) {
-                return false; // Não é regular se houver diferentes graus
-            }
-        }
-        return true; // O grafo é regular
-    }
-
-    public static boolean grafoCompleto(Lista[] listaAdjacencia, String[] rotulos) {
-        int n = listaAdjacencia.length;
-        for (int i = 0; i < n; i++) {
-            boolean[] visitado = new boolean[n];
-            No atual = listaAdjacencia[i].getInicio();
-            while (atual != null) {
-                int j = findIndex(rotulos, atual.getAresta());
-                visitado[j] = true;
-                atual = atual.getProx();
-            }
-            for (int j = 0; j < n; j++) {
-                if (i != j && !visitado[j]) {
-                    return false; // O grafo não é completo se algum vértice não tiver aresta
-                }
-            }
-        }
-        return true; // O grafo é completo
-    }
-
-    public void bfs(Lista[] listaAdjacencia, String[] rotulos, String verticeInicial) {
-        boolean[] visitado = new boolean[rotulos.length];
-        Queue<String> fila = new LinkedList<>();
-        Lista arvoreGeradora = new Lista();  // Lista para armazenar a árvore geradora
-        int ordemVisita = 1;  // Contador para a ordem de visita
-
-        // Encontrar o índice do vértice inicial
-        int inicioIndex = Lista.findIndex(rotulos, verticeInicial);
-
-        // Marcar o vértice inicial como visitado e adicionar à fila
-        visitado[inicioIndex] = true;
-        fila.add(verticeInicial);
-
-        // Adicionar o vértice inicial à árvore geradora com ordem 0 (inicial)
-        arvoreGeradora.inserirFim(verticeInicial, 0);
-
-        // Executar a BFS
-        while (!fila.isEmpty()) {
-            String atual = fila.poll();  // Remove o primeiro da fila
-            int atualIndex = Lista.findIndex(rotulos, atual);
-
-            No noAtual = listaAdjacencia[atualIndex].getInicio();
-            while (noAtual != null) {
-                int vizinhoIndex = Lista.findIndex(rotulos, noAtual.getAresta());
-                if (!visitado[vizinhoIndex]) {
-                    visitado[vizinhoIndex] = true;
-                    fila.add(noAtual.getAresta());
-                    // Adicionar o vértice à árvore geradora com a ordem de visita
-                    arvoreGeradora.inserirFim(noAtual.getAresta(), ordemVisita++);
-                }
-                noAtual = noAtual.getProx();
-            }
-        }
-
-        // Exibe a árvore geradora com a ordem de visita
-        System.out.println("Árvore geradora na ordem de visita:");
-        arvoreGeradora.exibirLista();
+        return -1;
     }
 }

@@ -16,15 +16,16 @@ public class Main {
         System.out.println("Digite o nome do arquivo (sem .txt no final): ");
         lerArquivo(sc.nextLine());
         if (listaAdjacencia != null && rotulos != null) {
+            // Exibe a lista de adjacência
             System.out.println("Lista do grafo:");
             for (int i = 0; i < listaAdjacencia.length; i++) {
+                System.out.println("Vértice " + rotulos[i] + ":");
                 listaAdjacencia[i].exibirLista();
             }
 
-            // Executa a BFS a partir de um vértice inicial
-            System.out.println("Digite o vértice inicial para a BFS:");
-            String verticeInicial = sc.nextLine();
-            listaAdjacencia[0].bfs(listaAdjacencia, rotulos, verticeInicial);
+            // Executa a DFS para encontrar pontos de articulação
+            Lista lista = new Lista();
+            lista.buscarArticulacao(listaAdjacencia, rotulos);  // Chama a DFS e exibe os pontos de articulação
         } else {
             System.out.println("Lista de adjacência ou rótulos não carregados.");
         }
