@@ -1,9 +1,6 @@
 package Lista;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
 
 public class Lista {
     private No inicio;
@@ -64,10 +61,21 @@ public class Lista {
         Arrays.fill(visitado, false);
         Arrays.fill(articulacao, false);
 
+        // Ordenar os rótulos em ordem alfabética e ajustar a lista de adjacência
+        // Precisamos de uma lista auxiliar de índices para ajustar os rótulos
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+
+        // Ordenar os índices de acordo com os rótulos em ordem alfabética
+        Arrays.sort(indices, Comparator.comparingInt(i -> rotulos[i].charAt(0)));
+
         // Função de busca em profundidade (DFS) recursiva
         for (int i = 0; i < n; i++) {
-            if (!visitado[i]) {
-                dfs(listaAdjacencia, i, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
+            int v = indices[i];
+            if (!visitado[v]) {
+                dfs(listaAdjacencia, v, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
             }
         }
 
@@ -86,9 +94,19 @@ public class Lista {
         prenum[v] = menor[v] = ++tempo; // Definir tempo de visita
         int filhos = 0;
 
+        // Criar uma lista de adjacentes e ordená-los em ordem alfabética
+        List<Integer> adjacentes = new ArrayList<>();
         No atual = listaAdjacencia[v].getInicio();
         while (atual != null) {
-            int adj = findIndex(rotulos, atual.getAresta());
+            adjacentes.add(findIndex(rotulos, atual.getAresta()));
+            atual = atual.getProx();
+        }
+
+        // Ordenar os adjacentes de acordo com a ordem alfabética dos rótulos
+        adjacentes.sort(Comparator.comparingInt(i -> rotulos[i].charAt(0)));
+
+        // Realizar a DFS para cada adjacente em ordem alfabética
+        for (int adj : adjacentes) {
             if (!visitado[adj]) {
                 filhos++;
                 pais[adj] = v;
@@ -108,7 +126,6 @@ public class Lista {
                 // Atualiza o valor menor[v] para o ancestral
                 menor[v] = Math.min(menor[v], prenum[adj]);
             }
-            atual = atual.getProx();
         }
     }
 
