@@ -59,8 +59,8 @@ public class Lista {
         }
     }
 
-    public void buscarArticulacao(Lista[] listaAdjacencia, String[] rotulos) {
-        int n = listaAdjacencia.length,v,tempo=0;
+    public void verificaArticulacao(Lista[] listaAdjacencia, String[] rotulos) {
+        int n = listaAdjacencia.length,vetAtual,ordem=0;
         boolean[] visitado = new boolean[n];
         int[] prenum = new int[n];
         int[] menor = new int[n];
@@ -75,9 +75,9 @@ public class Lista {
             indices[i] = i;
         Arrays.sort(indices, Comparator.comparingInt(i -> rotulos[i].charAt(0)));
         for (int i = 0; i < n; i++) {
-            v = indices[i];
-            if (!visitado[v])
-                dfs(listaAdjacencia, v, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
+            vetAtual = indices[i];
+            if (!visitado[vetAtual])
+                dfs(listaAdjacencia, vetAtual, visitado, prenum, menor, pais, articulacao, ordem, rotulos);
         }
         exibirArvoreDFSVisual(rotulos, pais, listaAdjacencia);
         System.out.println("======================================================");
@@ -90,12 +90,12 @@ public class Lista {
         System.out.println("======================================================");
     }
 
-    private void dfs(Lista[] listaAdjacencia, int v, boolean[] visitado, int[] prenum, int[] menor, int[] pais, boolean[] articulacao, int tempo, String[] rotulos) {
-        visitado[v] = true;
-        prenum[v] = menor[v] = ++tempo; // Definir tempo de visita
+    private void dfs(Lista[] listaAdjacencia, int vetAtual, boolean[] visitado, int[] prenum, int[] menor, int[] pais, boolean[] articulacao, int ordem, String[] rotulos) {
+        visitado[vetAtual] = true;
+        prenum[vetAtual] = menor[vetAtual] = ++ordem; // Definir tempo de visita
         int filhos = 0;
         List<Integer> adjacentes = new ArrayList<>();
-        No atual = listaAdjacencia[v].getInicio();
+        No atual = listaAdjacencia[vetAtual].getInicio();
 
         while (atual != null) {
             adjacentes.add(findIndex(rotulos, atual.getAresta()));
@@ -105,20 +105,20 @@ public class Lista {
         for (int adj : adjacentes) {
             if (!visitado[adj]) {
                 filhos++;
-                pais[adj] = v;
-                dfs(listaAdjacencia, adj, visitado, prenum, menor, pais, articulacao, tempo, rotulos);
+                pais[adj] = vetAtual;
+                dfs(listaAdjacencia, adj, visitado, prenum, menor, pais, articulacao, ordem, rotulos);
 
                 // Atualiza o valor menor[v]
-                menor[v] = Math.min(menor[v], menor[adj]);
+                menor[vetAtual] = Math.min(menor[vetAtual], menor[adj]);
 
                 // Condições para identificar pontos de articulação
-                if (pais[v] == -1 && filhos > 1)
-                    articulacao[v] = true; // A raiz é articulação se tiver mais de um filho
-                if (pais[v] != -1 && menor[adj] >= prenum[v])
-                    articulacao[v] = true; // Verifica a condição para vértices não raiz
-            } else if (adj != pais[v]) {
+                if (pais[vetAtual] == -1 && filhos > 1)
+                    articulacao[vetAtual] = true; // A raiz é articulação se tiver mais de um filho
+                if (pais[vetAtual] != -1 && menor[adj] >= prenum[vetAtual])
+                    articulacao[vetAtual] = true; // Verifica a condição para vértices não raiz
+            } else if (adj != pais[vetAtual]) {
                 // Atualiza o valor menor[v] para o ancestral
-                menor[v] = Math.min(menor[v], prenum[adj]);
+                menor[vetAtual] = Math.min(menor[vetAtual], prenum[adj]);
             }
         }
     }
