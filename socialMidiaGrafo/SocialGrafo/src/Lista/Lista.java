@@ -79,6 +79,8 @@ public class Lista {
             }
         }
 
+        exibirArvoreDFSVisual(rotulos, pais);
+
         // Exibir pontos de articulação
         System.out.println("Pontos de articulação:");
         for (int i = 0; i < n; i++) {
@@ -136,5 +138,32 @@ public class Lista {
             }
         }
         return -1;
+    }
+
+    public void exibirArvoreDFSVisual(String[] rotulos, int[] pais) {
+        System.out.println("Estrutura da Árvore DFS (visual):");
+
+        // Começa por todas as raízes (vértices com pais == -1)
+        for (int i = 0; i < pais.length; i++) {
+            if (pais[i] == -1) {
+                exibirSubArvore(i, 0, rotulos, pais);  // Raiz com nível 0
+            }
+        }
+    }
+
+    // Função recursiva para exibir os nós da árvore
+    private void exibirSubArvore(int vertice, int nivel, String[] rotulos, int[] pais) {
+        // Exibir o vértice atual com a indentação de acordo com o nível
+        for (int i = 0; i < nivel; i++) {
+            System.out.print("   ");  // Indenta o nível
+        }
+        System.out.println(rotulos[vertice]);
+
+        // Procurar e exibir todos os filhos deste vértice
+        for (int i = 0; i < pais.length; i++) {
+            if (pais[i] == vertice) {
+                exibirSubArvore(i, nivel + 1, rotulos, pais);  // Chamar recursivamente para os filhos
+            }
+        }
     }
 }
