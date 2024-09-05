@@ -33,7 +33,7 @@ public class Main {
             }
             // Executa a DFS para encontrar pontos de articulação
             Lista lista = new Lista();
-            lista.buscarArticulacao(listaAdjacencia, rotulos);  // Chama a DFS e exibe os pontos de articulação
+            lista.verificaArticulacao(listaAdjacencia, rotulos);  // Chama a DFS e exibe os pontos de articulação
         } else {
             System.out.println("Lista de adjacência ou rótulos não carregados.");
         }
